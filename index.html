@@ -3,8 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function() {
+      if (window.location.search.indexOf('preview=mobile') !== -1) {
+        var m = document.querySelector('meta[name="viewport"]');
+        if (m) m.setAttribute('content', 'width=375, initial-scale=1');
+      }
+    })();
+  </script>
   <title>Meatguy Steakhouse | Premium Dry-Aged Steak Experience</title>
   <meta name="description" content="Where Passion Meets Perfection. Reservasi dan inquiry via WhatsApp — Meatguy Bintaro & SCBD." />
+  <!-- Open Graph / share -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Meatguy Steakhouse | Premium Dry-Aged Steak Experience" />
+  <meta property="og:description" content="Where Passion Meets Perfection. Reservasi dan inquiry via WhatsApp — Meatguy Bintaro & SCBD." />
+  <meta property="og:url" content="https://meatguysteakhouse.com/" />
+  <meta property="og:image" content="https://meatguysteakhouse.com/og-image.jpg" />
+  <meta property="og:locale" content="id_ID" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Meatguy Steakhouse | Premium Dry-Aged Steak Experience" />
+  <meta name="twitter:description" content="Where Passion Meets Perfection. Reservasi dan inquiry via WhatsApp — Meatguy Bintaro & SCBD." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -36,9 +55,35 @@
       overflow-x: hidden;
     }
 
-    /* Hero with parallax-style background */
+    /* Site header — shows after scroll (mobile-first) */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.75rem 1.25rem;
+      background: rgba(13, 11, 10, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+    }
+    .site-header.visible {
+      transform: translateY(0);
+    }
+    .site-header .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    /* Hero with background image + overlay (mobile-first), vertical image, fixed on scroll */
     .hero {
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -46,9 +91,20 @@
       text-align: center;
       position: relative;
       padding: 2rem 1.5rem;
-      background: 
+      background-color: var(--bg-deep);
+      background-image:
         radial-gradient(ellipse 80% 50% at 50% 20%, rgba(201, 169, 98, 0.08) 0%, transparent 50%),
-        linear-gradient(180deg, var(--bg-deep) 0%, #131110 100%);
+        linear-gradient(180deg, rgba(13,11,10,0.65) 0%, rgba(13,11,10,0.88) 50%, rgba(13,11,10,0.96) 100%),
+        url('assets/hero-bg.png');
+      background-size: auto, auto, cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: scroll, scroll, fixed;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    .hero.has-bg-local {
+      /* same image, already in default above */
     }
 
     .hero::before {
@@ -62,6 +118,30 @@
     .hero-content {
       position: relative;
       z-index: 1;
+    }
+
+    .hero .brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.35rem, 4vw, 1.75rem);
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.05s forwards;
+    }
+    .hero .hero-logo {
+      display: block;
+      margin: 0 auto 0.75rem;
+      max-height: 5.5rem;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0s forwards;
+    }
+    @media (max-width: 640px) {
+      .hero .hero-logo { max-height: 4rem; }
     }
 
     .hero .label {
@@ -98,7 +178,9 @@
     .cta-hero {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.6rem;
+      min-height: 48px;
       padding: 1rem 1.75rem;
       background: var(--accent);
       color: var(--bg-deep);
@@ -207,6 +289,77 @@
       margin-top: 0.75rem;
     }
 
+    /* Awards section — like meatguysteakhouse.com: logo row + 3 paragraphs */
+    .awards {
+      padding: 4rem 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .awards.reveal {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .awards.reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .awards .badge {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .awards .awards-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 600;
+      margin-bottom: 2rem;
+      line-height: 1.25;
+    }
+    .awards-logos-row {
+      margin-bottom: 2rem;
+      display: block;
+      position: relative;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .awards-logos-row::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to right, var(--bg-deep) 0%, transparent 14%, transparent 86%, var(--bg-deep) 100%),
+                  linear-gradient(to bottom, var(--bg-deep) 0%, transparent 10%, transparent 90%, var(--bg-deep) 100%);
+    }
+    .awards-logos-row img {
+      width: 100%;
+      height: auto;
+      max-width: 640px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      background-color: var(--bg-deep);
+    }
+    .awards-body {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .awards-body p {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .awards-body p:last-child {
+      margin-bottom: 0;
+    }
+
     /* CTA block */
     .cta-block {
       text-align: center;
@@ -232,19 +385,20 @@
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
+      min-height: 48px;
       padding: 1rem 2rem;
-      background: #25D366;
-      color: #fff;
+      background: var(--accent);
+      color: var(--bg-deep);
       text-decoration: none;
       font-weight: 500;
       font-size: 1.05rem;
       border-radius: 4px;
-      transition: filter 0.2s, transform 0.2s;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+      transition: background 0.25s, transform 0.2s;
+      box-shadow: 0 4px 20px rgba(201, 169, 98, 0.35);
     }
 
     .cta-wa:hover {
-      filter: brightness(1.08);
+      background: var(--accent-dim);
       transform: translateY(-2px);
     }
 
@@ -268,47 +422,71 @@
   </style>
 </head>
 <body>
+  <header class="site-header" id="site-header" aria-label="Navigation">
+    <span class="brand-name" data-json="hero.brandName">Meatguy Steakhouse</span>
+  </header>
   <main>
-    <section class="hero">
+    <section class="hero" id="hero">
       <div class="hero-content">
-        <p class="label">Premium Dry-Aged Steak</p>
-        <h1>Where Passion Meets Perfection</h1>
-        <p class="tagline">Experience the craft. Reserve your table or ask us anything — we’re one message away.</p>
-        <a href="https://wa.me/6281250070094" class="cta-hero" target="_blank" rel="noopener">
+        <img class="hero-logo" src="assets/logo.png" alt="Meatguy Steakhouse" />
+        <h2 class="brand-name" data-json="hero.brandName">Meatguy Steakhouse</h2>
+        <p class="label" data-json="hero.label">Premium Dry-Aged Steak</p>
+        <h1 data-json="hero.headline">Where Passion Meets Perfection</h1>
+        <p class="tagline" data-json="hero.tagline">Experience the craft. Reserve your table or ask us anything — we’re one message away.</p>
+        <a href="https://wa.me/628119628008" class="cta-hero" target="_blank" rel="noopener" data-json-href="hero.waUrl">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Chat via WhatsApp
+          <span data-json="hero.ctaText">Chat via WhatsApp</span>
         </a>
       </div>
       <div class="scroll-hint">
         <span class="line"></span>
-        <span>Scroll</span>
+        <span data-json="hero.scrollHint">Scroll</span>
       </div>
     </section>
 
     <section class="section reveal" id="about">
-      <p class="badge">The Experience</p>
-      <h2>More than a meal</h2>
-      <p>At Meatguy Steakhouse, every cut is chosen and prepared with passion, precision, and respect for flavour. We’re honoured to be ranked No. 90 on the World’s 101 Best Steak Restaurants (2025).</p>
-      <p>Bintaro & SCBD — one message away for reservations and inquiries.</p>
+      <p class="badge" data-json="about.badge">The Experience</p>
+      <h2 data-json="about.title">More than a meal</h2>
+      <p data-json="about.paragraphs[0]">At Meatguy Steakhouse, every cut is chosen and prepared with passion, precision, and respect for flavour. We’re honoured to be ranked No. 90 on the World’s 101 Best Steak Restaurants (2025).</p>
+      <p data-json="about.paragraphs[1]">Bintaro & SCBD — one message away for reservations and inquiries.</p>
+    </section>
+
+    <section class="awards reveal" id="awards">
+      <p class="badge" data-json="awards.badge">Awards</p>
+      <h2 class="awards-title" data-json="awards.title">Recognition</h2>
+      <div class="awards-logos-row">
+        <img src="assets/awards-logos-only.png" alt="Exquisite Awards 2023, World's 101 Best Steak Restaurants, Exquisite Awards 2024" loading="lazy" />
+      </div>
+      <div class="awards-body">
+        <p data-json="awards.paragraphs[0]">At Meatguy Steakhouse, everything begins with passion and craftsmanship. We select only the finest cuts and prepare each with care, precision, and respect for flavor.</p>
+        <p data-json="awards.paragraphs[1]">More than just a meal, we aim to create an experience, one that stirs your senses and lingers long after the last bite.</p>
+        <p data-json="awards.paragraphs[2]">In 2025, we are honored to be ranked No. 90 on the World's 101 Best Steak Restaurants, a recognition that reflects our continued pursuit of excellence in every cut we serve.</p>
+      </div>
+    </section>
+
+    <section class="section reveal" id="lokasi">
+      <p class="badge" data-json="lokasi.badge">Lokasi</p>
+      <h2 data-json="lokasi.title">Kunjungi kami</h2>
+      <p data-json="lokasi.paragraph">Meatguy Bintaro & Meatguy SCBD — siap menerima reservasi dan inquiry. Satu chat WhatsApp untuk kedua outlet.</p>
     </section>
 
     <section class="cta-block">
-      <h2>Reservasi atau tanya apa saja</h2>
-      <p class="sub">Tim kami siap bantu lewat WhatsApp</p>
-      <a href="https://wa.me/6281250070094" class="cta-wa" target="_blank" rel="noopener">
+      <h2 data-json="ctaBlock.title">Reservasi atau tanya apa saja</h2>
+      <p class="sub" data-json="ctaBlock.sub">Tim kami siap bantu lewat WhatsApp</p>
+      <a href="https://wa.me/628119628008" class="cta-wa" target="_blank" rel="noopener" data-json-href="ctaBlock.waUrl">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        +62 812-5007-0094
+        <span data-json="ctaBlock.ctaText">Contact Us!</span>
       </a>
     </section>
   </main>
 
   <footer>
-    <p>Meatguy Steakhouse — Bintaro & SCBD · <a href="https://meatguysteakhouse.com" target="_blank" rel="noopener">meatguysteakhouse.com</a></p>
+    <p><span data-json="footer.text">Meatguy Steakhouse — Bintaro & SCBD</span> · <a href="https://meatguysteakhouse.com" target="_blank" rel="noopener" data-json-href="footer.websiteUrl" data-json="footer.websiteLabel">meatguysteakhouse.com</a></p>
   </footer>
 
   <script>
     (function () {
-      var sections = document.querySelectorAll('.section.reveal');
+      var sections = document.querySelectorAll('.section.reveal, .awards.reveal');
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -316,8 +494,51 @@
           }
         });
       }, { rootMargin: '-10% 0px -10% 0px', threshold: 0 });
-
       sections.forEach(function (el) { observer.observe(el); });
+
+      var header = document.getElementById('site-header');
+      function onScroll() {
+        if (window.scrollY > 80) {
+          header.classList.add('visible');
+        } else {
+          header.classList.remove('visible');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      function getByPath(obj, path) {
+        var parts = path.replace(/\[(\d+)\]/, '.$1').split('.');
+        var cur = obj;
+        for (var i = 0; i < parts.length && cur != null; i++) {
+          cur = cur[parts[i]];
+        }
+        return cur;
+      }
+      fetch('content.json')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          document.querySelectorAll('[data-json]').forEach(function (el) {
+            var key = el.getAttribute('data-json');
+            var val = getByPath(data, key);
+            if (val != null) {
+              el.textContent = val;
+            }
+          });
+          document.querySelectorAll('[data-json-href]').forEach(function (el) {
+            var key = el.getAttribute('data-json-href');
+            var val = getByPath(data, key);
+            if (val != null) {
+              el.setAttribute('href', val);
+            }
+          });
+        })
+        .catch(function () {});
+
+      var hero = document.getElementById('hero');
+      var heroBgTest = new Image();
+      heroBgTest.onload = function () { hero.classList.add('has-bg-local'); };
+      heroBgTest.src = 'assets/hero-bg.png';
     })();
   </script>
 </body>

@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "title": "Meatguy Steakhouse | Premium Dry-Aged Steak Experience",
+    "description": "Where Passion Meets Perfection. Reservasi dan inquiry via WhatsApp — Meatguy Bintaro & SCBD."
+  },
+  "hero": {
+    "brandName": "Meatguy Steakhouse",
+    "label": "Premium Dry-Aged Steak",
+    "headline": "Where Passion Meets Perfection",
+    "tagline": "Experience the craft. Reserve your table or ask us anything — we're one message away.",
+    "ctaText": "Chat via WhatsApp",
+    "waUrl": "https://wa.me/628119628008",
+    "scrollHint": "Scroll"
+  },
+  "about": {
+    "badge": "The Experience",
+    "title": "More than a meal",
+    "paragraphs": [
+      "At Meatguy Steakhouse, every cut is chosen and prepared with passion, precision, and respect for flavour. We're honoured to be ranked No. 90 on the World's 101 Best Steak Restaurants (2025).",
+      "Bintaro & SCBD — one message away for reservations and inquiries."
+    ]
+  },
+  "awards": {
+    "badge": "Awards",
+    "title": "Recognition",
+    "paragraphs": [
+      "At Meatguy Steakhouse, everything begins with passion and craftsmanship. We select only the finest cuts and prepare each with care, precision, and respect for flavor.",
+      "More than just a meal, we aim to create an experience, one that stirs your senses and lingers long after the last bite.",
+      "In 2025, we are honored to be ranked No. 90 on the World's 101 Best Steak Restaurants, a recognition that reflects our continued pursuit of excellence in every cut we serve."
+    ]
+  },
+  "lokasi": {
+    "badge": "Lokasi",
+    "title": "Kunjungi kami",
+    "paragraph": "Meatguy Bintaro & Meatguy SCBD — siap menerima reservasi dan inquiry. Satu chat WhatsApp untuk kedua outlet."
+  },
+  "ctaBlock": {
+    "title": "Reservasi atau tanya apa saja",
+    "sub": "Tim kami siap bantu lewat WhatsApp",
+    "ctaText": "Contact Us!",
+    "waUrl": "https://wa.me/628119628008"
+  },
+  "footer": {
+    "text": "Meatguy Steakhouse — Bintaro & SCBD",
+    "websiteUrl": "https://meatguysteakhouse.com",
+    "websiteLabel": "meatguysteakhouse.com"
+  }
+}

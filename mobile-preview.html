@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preview HP — Meatguy Landing</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #2a2a2a;
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .preview-label {
+      color: #999;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    .phone-frame {
+      width: 375px;
+      max-width: 100%;
+      height: 667px;
+      max-height: 85vh;
+      border: 12px solid #1a1a1a;
+      border-radius: 36px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      background: #0d0b0a;
+    }
+    .phone-frame iframe {
+      width: 375px;
+      height: 100%;
+      border: 0;
+      display: block;
+      transform-origin: 0 0;
+    }
+    .file-warning {
+      display: none;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      padding: 1.5rem;
+      border-radius: 12px;
+      max-width: 400px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .file-warning.show { display: block; }
+    .file-warning code {
+      background: #333;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+    .file-warning a { color: #c9a962; }
+    @media (max-width: 420px) {
+      .phone-frame {
+        width: 100%;
+        height: 600px;
+        border-radius: 24px;
+        border-width: 8px;
+      }
+      .phone-frame iframe {
+        width: 100%;
+        min-width: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="file-warning" id="file-warning">
+    Preview harus dibuka lewat server. Di terminal (folder <code>meatguy-landing</code>) jalankan:<br><br>
+    <code>npx serve -p 3456 -s</code><br><br>
+    Lalu buka: <a href="http://localhost:3456/mobile-preview.html" id="preview-link">http://localhost:3456/mobile-preview.html</a>
+  </div>
+  <p class="preview-label">Preview tampilan dari HP (375×667px)</p>
+  <p style="margin-bottom: 0.75rem;"><button type="button" id="btn-mobile-window" style="padding: 0.6rem 1.2rem; background: #c9a962; color: #0d0b0a; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Buka bentuk mobile (jendela 375px)</button></p>
+  <div class="phone-frame">
+    <iframe src="index.html?preview=mobile" title="Meatguy Steakhouse — mobile preview" id="preview-frame"></iframe>
+  </div>
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.getElementById('file-warning').classList.add('show');
+      document.getElementById('preview-frame').style.display = 'none';
+      var btn = document.getElementById('btn-mobile-window');
+      if (btn) btn.style.display = 'none';
+    } else {
+      document.getElementById('btn-mobile-window').onclick = function() {
+        var w = 375, h = 700;
+        var left = (screen.width - w) / 2;
+        var top = (screen.height - h) / 2;
+        window.open('index.html?preview=mobile', 'meatguy-mobile', 'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',scrollbars=yes,resizable=yes');
+      };
+    }
+  </script>
+</body>
+</html>
