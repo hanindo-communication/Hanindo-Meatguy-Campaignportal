@@ -1030,23 +1030,14 @@
         gap: 0.85rem 0.9rem;
       }
     }
-    /* Wine row: sama dengan grid side dish — 2 kolom mobile, 3 kolom desktop; foto 4:3 */
+    /* Wine: selalu 3 kolom satu baris (tidak ada item sendirian di baris kedua) */
     .highlighted-menu-grid--wine {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem 0.65rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.45rem, 2.2vw, 0.9rem);
     }
     @media (min-width: 640px) {
       .highlighted-menu-grid--wine {
-        grid-template-columns: repeat(3, 1fr);
         gap: 0.85rem 0.9rem;
-      }
-    }
-    /* 3 botol di grid 2 kolom: item ketiga selebar satu kolom, di tengah baris */
-    @media (max-width: 639px) {
-      .highlighted-menu-grid--wine .highlighted-menu-card:nth-child(3) {
-        grid-column: 1 / -1;
-        justify-self: center;
-        width: calc((100% - 0.65rem) / 2);
       }
     }
     /* Wine: kotak 4:3 sejajar ukuran foto side dish; cover + posisi aman untuk botol */
