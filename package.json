@@ -2,6 +2,7 @@
   "name": "meatguy-landing",
   "private": true,
   "scripts": {
+    "dev": "serve -s . -l 3789",
     "start": "serve -s . -l 3789"
   },
   "devDependencies": {

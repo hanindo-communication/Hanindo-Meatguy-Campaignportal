@@ -7,11 +7,8 @@
     "brandName": "Meatguy Steakhouse",
     "label": "Premium Dry-Aged Steak",
     "headline": "Where Passion Meets Perfection",
-    "tagline": [
-      "Experience the craft. Reserve your table or ask us anything.",
-      "We're one message away."
-    ],
-    "ctaText": "Chat via WhatsApp",
+    "tagline": "Experience the craft.\nReserve your table or ask us anything.",
+    "ctaText": "Book Now",
     "waUrl": "https://wa.me/6281250070094",
     "scrollHint": "Scroll"
   },
@@ -30,7 +27,7 @@
     "badge": "Meet Our Meat Master",
     "title": "Expert craftsmanship in every cut",
     "name": "Chef Teuku Wahyudi",
-    "subtitle": "El Patrón — Executive Chef & Meat Master",
+    "subtitle": "El Patrón",
     "imageUrl": "assets/chef.png",
     "paragraphs": [
       "El Patrón brings a lifetime of passion to every cut: great steak from heart, not just heat — from grill to plate."
@@ -73,15 +70,13 @@
   "lokasi": {
     "badge": "Location",
     "title": "Visit us",
-    "waLinkText": "Contact via WhatsApp",
     "bintaro": {
       "name": "Meatguy Steakhouse Bintaro",
       "address": "Jl. Maleo JA 1 No.1, Pd. Pucung, Kec. Pd. Aren, Kota Tangerang Selatan, Banten 15229",
       "mapsUrl": "https://maps.app.goo.gl/AdwhndEGk2UGVY4y5",
       "mapCta": "Open in Google Maps",
       "embedQuery": "-6.29876,106.71497",
-      "mapInfo": "Bintaro",
-      "waUrl": "https://wa.me/6281250070094"
+      "mapInfo": "Bintaro"
     },
     "scbd": {
       "name": "Meatguy Steakhouse SCBD",
@@ -89,13 +84,13 @@
       "mapsUrl": "https://maps.app.goo.gl/cyGwSu9Nnfq9JXZf6",
       "mapCta": "Open in Google Maps",
       "embedQuery": "-6.22535,106.80905",
-      "mapInfo": "SCBD",
-      "waUrl": "https://wa.me/6281250070094"
+      "mapInfo": "SCBD"
     }
   },
   "ctaBlock": {
     "title": "Reserve now",
     "ctaText": "Chat on WhatsApp",
+    "floatingLabel": "Book Now",
     "waUrl": "https://wa.me/6281250070094"
   },
   "footer": {

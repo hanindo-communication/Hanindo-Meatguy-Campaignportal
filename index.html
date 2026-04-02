@@ -390,15 +390,12 @@
       font-size: clamp(1rem, 2.5vw, 1.25rem);
       color: rgba(245, 240, 235, 0.92);
       font-weight: 400;
-      max-width: 32ch;
-      margin: 0 auto 2.5rem;
+      max-width: min(34ch, 92vw);
+      margin: 0 auto 1.35rem;
+      line-height: 1.38;
+      white-space: pre-line;
       opacity: 0;
       animation: fadeUp 0.8s ease 0.5s forwards;
-    }
-
-    .hero .tagline .tagline-line2 {
-      display: block;
-      margin-top: 0.65rem;
     }
 
     .cta-hero {
@@ -445,6 +442,69 @@
     .cta-hero svg {
       width: 1.25rem;
       height: 1.25rem;
+    }
+
+    /* Jam buka di hero: jauh dari CTA, kartu & label lebih transparan (bukan “kotak label” pekat) */
+    .hero-opening-hours {
+      margin-top: clamp(1.85rem, 4.5vw, 2.75rem);
+      max-width: 38rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.72s ease 0.74s forwards;
+      scroll-margin-top: 5rem;
+    }
+    .hero-opening-hours__label {
+      font-size: clamp(0.7rem, 1.2vw, 0.82rem);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 98, 0.92);
+      margin: 0 0 0.65rem;
+      text-shadow: 0 0 20px rgba(201, 169, 98, 0.22);
+      font-weight: 600;
+    }
+    .hero-opening-hours .opening-hours-grid {
+      margin-top: 0;
+      gap: 0.65rem;
+    }
+    .hero-opening-hours .opening-hours-card {
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      background: rgba(13, 11, 10, 0.28);
+      background-image: linear-gradient(165deg, rgba(22, 20, 18, 0.22) 0%, rgba(13, 11, 10, 0.32) 100%);
+      border: 1px solid rgba(201, 169, 98, 0.09);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: none;
+      transform: none;
+    }
+    .hero-opening-hours .opening-hours-card h3 {
+      font-size: 0.85rem;
+      margin-bottom: 0.32rem;
+      letter-spacing: 0.03em;
+      color: rgba(201, 169, 98, 0.78);
+    }
+    .hero-opening-hours .opening-hours-card p {
+      font-size: 0.68rem;
+      line-height: 1.42;
+      margin: 0.12rem 0 0;
+      color: rgba(245, 240, 235, 0.72);
+    }
+    @media (min-width: 769px) {
+      .hero-opening-hours .opening-hours-card:hover {
+        border-color: rgba(201, 169, 98, 0.16);
+        background: rgba(13, 11, 10, 0.38);
+        background-image: linear-gradient(165deg, rgba(22, 20, 18, 0.3) 0%, rgba(13, 11, 10, 0.42) 100%);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        transform: none;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-opening-hours {
+        opacity: 1;
+        animation: none;
+      }
     }
 
     /* Scroll hint — di atas gradasi bawah hero; fades out after scroll */
@@ -507,9 +567,9 @@
       content: '';
       position: absolute;
       inset: -1px;
-      border-radius: 12px;
+      border-radius: 0;
       pointer-events: none;
-      box-shadow: inset 0 0 80px rgba(201, 169, 98, 0.07);
+      box-shadow: inset 0 0 100px rgba(201, 169, 98, 0.028);
       opacity: 0;
       transition: opacity 0.6s ease;
     }
@@ -530,44 +590,202 @@
         radial-gradient(ellipse 82% 55% at 50% 25%, rgba(201, 169, 98, 0.045) 0%, transparent 52%);
     }
 
-    /* Founder / Chef: gradient lembut sambung about & awards */
-    #founder.section {
-      background-color: transparent;
-      background-image:
-        linear-gradient(180deg, transparent 0%, rgba(201, 169, 98, 0.02) 15%, transparent 50%, rgba(201, 169, 98, 0.02) 85%, transparent 100%),
-        radial-gradient(ellipse 65% 55% at 30% 50%, rgba(201, 169, 98, 0.05) 0%, transparent 55%);
+    .about-video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      margin-top: 1.75rem;
+      width: 100%;
+      min-width: 0;
     }
-    #chef.section {
-      background-color: transparent;
-      background-image:
-        linear-gradient(180deg, transparent 0%, rgba(201, 169, 98, 0.02) 20%, transparent 80%, transparent 100%),
-        radial-gradient(ellipse 55% 65% at 70% 50%, rgba(201, 169, 98, 0.05) 0%, transparent 55%);
+    @media (max-width: 700px) {
+      .about-video-grid {
+        grid-template-columns: 1fr;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    .about-video-card {
+      position: relative;
+      margin: 0;
+      width: 100%;
+      min-width: 0;
+      aspect-ratio: 9 / 16;
+      max-height: 420px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(201, 169, 98, 0.22);
+      background:
+        linear-gradient(165deg, rgba(22, 20, 18, 0.95) 0%, rgba(13, 11, 10, 0.98) 100%);
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.28);
+    }
+    .about-video-card iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .about-video-card .about-video-el {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      object-fit: cover;
+      background: #12100e;
+    }
+    /* Self-hosted video: overlay sedikit lebih gelap supaya label & ikon terbaca */
+    .about-video-card--native .about-video-trigger {
+      background:
+        radial-gradient(ellipse 72% 58% at 50% 50%, rgba(8, 7, 6, 0.52) 0%, rgba(13, 11, 10, 0.78) 100%);
+    }
+    .about-video-card--native .about-video-trigger:hover,
+    .about-video-card--native .about-video-trigger:focus-visible {
+      background:
+        radial-gradient(ellipse 72% 58% at 50% 50%, rgba(201, 169, 98, 0.06) 0%, rgba(13, 11, 10, 0.86) 100%);
+    }
+    .about-video-card--native .about-video-trigger__text {
+      text-transform: none;
+      letter-spacing: 0.07em;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.75);
+    }
+    .about-video-card--native .about-video-trigger__icon {
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    }
+    .about-video-trigger {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      margin: 0;
+      border: none;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 45%, rgba(34, 30, 26, 0.5) 0%, rgba(13, 11, 10, 0.92) 75%);
+      transition: color 0.25s ease, background 0.25s ease;
+    }
+    .about-video-trigger:hover,
+    .about-video-trigger:focus-visible {
+      color: var(--text);
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 45%, rgba(201, 169, 98, 0.12) 0%, rgba(13, 11, 10, 0.96) 72%);
+      outline: none;
+    }
+    .about-video-trigger:focus-visible {
+      box-shadow: inset 0 0 0 2px rgba(201, 169, 98, 0.55);
+    }
+    .about-video-trigger__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: 2px solid rgba(201, 169, 98, 0.5);
+      background: rgba(13, 11, 10, 0.55);
+      font-size: 1.1rem;
+      line-height: 1;
+      padding-left: 0.2em;
+    }
+    .about-video-card.is-loaded .about-video-trigger {
+      display: none;
     }
 
-    /* Section: experience — same width & bubble for all segments */
+    /* Highlighted menu: lebar sama dengan section lain (720px / full-bleed mobile) — grid 4 kolom di dalam kolom yang sama */
+    #highlighted-menu.section {
+      position: relative;
+      background-color: transparent;
+      background-image:
+        linear-gradient(180deg, transparent 0%, rgba(201, 169, 98, 0.018) 50%, rgba(201, 169, 98, 0.028) 100%),
+        radial-gradient(ellipse 78% 52% at 48% 28%, rgba(201, 169, 98, 0.042) 0%, transparent 52%);
+      padding-bottom: 4.65rem;
+    }
+
+    /* Founder + Chef: dua kolom seimbang, tipografi & jarak konsisten */
+    .founder-chef-pair {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      margin-top: -1px;
+      padding: 2.75rem 1.5rem 2.875rem;
+      background-color: transparent;
+      background-image:
+        linear-gradient(180deg, rgba(201, 169, 98, 0.028) 0%, rgba(201, 169, 98, 0.02) 12%, transparent 42%, transparent 58%, rgba(201, 169, 98, 0.02) 88%, transparent 100%),
+        radial-gradient(ellipse 72% 48% at 32% 45%, rgba(201, 169, 98, 0.045) 0%, transparent 52%),
+        radial-gradient(ellipse 58% 48% at 74% 55%, rgba(201, 169, 98, 0.038) 0%, transparent 54%);
+    }
+    @media (min-width: 769px) {
+      .founder-chef-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.25rem;
+        align-items: start;
+        padding: 2.875rem 1.5rem 3rem;
+      }
+    }
+    #founder.section.founder-chef-panel,
+    #chef.section.founder-chef-panel {
+      background-image: none;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin: 0;
+      max-width: none;
+      border-top: none;
+      border-bottom: none;
+      border-right: none;
+      min-width: 0;
+    }
+    @media (max-width: 768px) {
+      #chef.section.founder-chef-panel {
+        margin-top: 2.25rem;
+        padding-top: 2.25rem;
+        border-left: none;
+        border-top: 1px solid rgba(201, 169, 98, 0.14);
+        padding-left: 0;
+      }
+    }
+
+    /* Section: kolom konten menyatu dengan main (tanpa “kartu” bulat antar blok) */
     .section {
       padding: 5rem 1.5rem;
       max-width: 720px;
       margin: 0 auto;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      transition: box-shadow 0.4s ease, border-color 0.4s ease;
+      border-radius: 0;
+      border: none;
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.45s ease, box-shadow 0.45s ease;
     }
     @media (min-width: 769px) {
       .section:hover {
-        border-color: rgba(201, 169, 98, 0.12);
-        box-shadow: 0 0 0 1px rgba(201, 169, 98, 0.06);
+        border-color: rgba(201, 169, 98, 0.06);
+        box-shadow: none;
       }
     }
 
-    /* Scroll reveal: section entrance (fade/scale) + children stagger — more dramatic */
+    /* Scroll reveal: halus supaya tidak terasa “beda kotak” antar section */
     .section.reveal,
     .awards.reveal,
     .cta-block.reveal,
     footer.site-footer.reveal {
-      opacity: 0.95;
-      transform: scale(0.98);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity: 0.97;
+      transform: scale(0.995);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .section.reveal.visible,
     .awards.reveal.visible,
@@ -582,9 +800,9 @@
     .cta-block.reveal .reveal-item,
     footer.site-footer.reveal .reveal-item {
       opacity: 0;
-      transform: translateY(30px) scale(0.97);
-      transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(18px) scale(0.99);
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .section.reveal.visible .reveal-item,
@@ -595,49 +813,40 @@
       transform: translateY(0) scale(1);
     }
 
-    #founder.reveal .founder-photo.reveal-item { transform: translateY(calc(30px + var(--parallax-y, 0))) translateX(-12px) scale(0.97); }
+    #founder.reveal .founder-photo.reveal-item { transform: translateY(calc(18px + var(--parallax-y, 0))) translateX(-8px) scale(0.99); }
     #founder.reveal.visible .founder-photo.reveal-item { transform: translateY(var(--parallax-y, 0)) translateX(0) scale(1); }
-    #founder.reveal .founder-text.reveal-item { transform: translateY(30px) translateX(12px) scale(0.97); }
+    #founder.reveal .founder-text.reveal-item { transform: translateY(18px) translateX(8px) scale(0.99); }
     #founder.reveal.visible .founder-text.reveal-item { transform: translateY(0) translateX(0) scale(1); }
 
-    #chef.reveal .chef-photo.reveal-item { transform: translateY(calc(30px + var(--parallax-y, 0))) translateX(12px) scale(0.97); }
+    #chef.reveal .chef-photo.reveal-item { transform: translateY(calc(18px + var(--parallax-y, 0))) translateX(-8px) scale(0.99); }
     #chef.reveal.visible .chef-photo.reveal-item { transform: translateY(var(--parallax-y, 0)) translateX(0) scale(1); }
-    #chef.reveal .chef-text.reveal-item { transform: translateY(30px) translateX(-12px) scale(0.97); }
+    #chef.reveal .chef-text.reveal-item { transform: translateY(18px) translateX(8px) scale(0.99); }
     #chef.reveal.visible .chef-text.reveal-item { transform: translateY(0) translateX(0) scale(1); }
 
     #about.reveal.visible > .reveal-item:nth-child(1) { transition-delay: 0ms; }
     #about.reveal.visible > .reveal-item:nth-child(2) { transition-delay: 150ms; }
     #about.reveal.visible > .reveal-item:nth-child(3) { transition-delay: 280ms; }
     #about.reveal.visible > .reveal-item:nth-child(4) { transition-delay: 410ms; }
+    #about.reveal.visible > .reveal-item:nth-child(5) { transition-delay: 540ms; }
 
     #highlighted-menu.reveal.visible > .reveal-item:nth-child(1) { transition-delay: 0ms; }
-    #highlighted-menu.reveal.visible > .reveal-item:nth-child(2) { transition-delay: 150ms; }
-    #highlighted-menu.reveal.visible > .reveal-item:nth-child(3) { transition-delay: 280ms; }
-    #highlighted-menu.reveal.visible > .highlighted-menu-grid.reveal-item { transition-delay: 410ms; }
+    #highlighted-menu.reveal.visible > .highlighted-menu-rows.reveal-item { transition-delay: 150ms; }
+    #highlighted-menu.reveal.visible > .highlighted-menu-explore.reveal-item { transition-delay: 410ms; }
 
     #founder.reveal.visible .founder-photo.reveal-item { transition-delay: 0ms; }
     #founder.reveal.visible .founder-text.reveal-item { transition-delay: 180ms; }
 
-    #chef.reveal.visible .chef-text.reveal-item { transition-delay: 0ms; }
-    #chef.reveal.visible .chef-photo.reveal-item { transition-delay: 180ms; }
+    #chef.reveal.visible .chef-photo.reveal-item { transition-delay: 0ms; }
+    #chef.reveal.visible .chef-text.reveal-item { transition-delay: 180ms; }
 
     #awards.reveal.visible > .reveal-item:nth-child(1) { transition-delay: 0ms; }
     #awards.reveal.visible > .reveal-item:nth-child(2) { transition-delay: 150ms; }
     #awards.reveal.visible > .reveal-item:nth-child(3) { transition-delay: 280ms; }
-    #awards.reveal.visible .awards-body .reveal-item:nth-child(1) { transition-delay: 430ms; }
-    #awards.reveal.visible .awards-body .reveal-item:nth-child(2) { transition-delay: 560ms; }
-    #awards.reveal.visible .awards-body .reveal-item:nth-child(3) { transition-delay: 690ms; }
-
-    #opening-hours.reveal.visible > .reveal-item:nth-child(1) { transition-delay: 0ms; }
-    #opening-hours.reveal.visible > .reveal-item:nth-child(2) { transition-delay: 150ms; }
-    #opening-hours.reveal.visible > .reveal-item:nth-child(3) { transition-delay: 280ms; }
 
     #lokasi.reveal.visible > p.reveal-item { transition-delay: 0ms; }
     #lokasi.reveal.visible > h2.reveal-item { transition-delay: 150ms; }
-    #lokasi.reveal.visible .lokasi-outlet.reveal-item:nth-of-type(1) { transition-delay: 280ms; }
-    #lokasi.reveal.visible .lokasi-outlet.reveal-item:nth-of-type(2) { transition-delay: 410ms; }
-    #lokasi.reveal.visible .lokasi-map-col.reveal-item:nth-of-type(1) { transition-delay: 540ms; }
-    #lokasi.reveal.visible .lokasi-map-col.reveal-item:nth-of-type(2) { transition-delay: 670ms; }
+    #lokasi.reveal.visible .lokasi-location.reveal-item:nth-of-type(1) { transition-delay: 280ms; }
+    #lokasi.reveal.visible .lokasi-location.reveal-item:nth-of-type(2) { transition-delay: 410ms; }
 
     .cta-block.reveal.visible > h2.reveal-item { transition-delay: 0ms; }
     .cta-block.reveal.visible > a.reveal-item { transition-delay: 180ms; }
@@ -706,84 +915,210 @@
       margin-bottom: 1.25rem;
     }
 
-    /* Highlighted menu: satu grid, semua kartu format sama (gambar atas, teks bawah) */
-    .highlighted-menu-grid {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: 1fr;
-      max-width: 720px;
-      margin: 2rem auto 0;
+    /* Highlighted menu: CTA como pill / label — highlight ke konten menu */
+    .highlighted-menu-explore {
+      position: absolute;
+      left: 1.5rem;
+      bottom: 1.35rem;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: clamp(0.62rem, 1.05vw, 0.72rem);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 0.55rem 1.15rem 0.55rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201, 169, 98, 0.45);
+      background: linear-gradient(165deg, rgba(28, 25, 22, 0.92) 0%, rgba(13, 11, 10, 0.96) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(201, 169, 98, 0.12),
+        0 4px 22px rgba(0, 0, 0, 0.28),
+        0 0 28px rgba(201, 169, 98, 0.14);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition:
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+    }
+    .highlighted-menu-explore__label {
+      text-shadow: 0 0 18px rgba(201, 169, 98, 0.2);
+    }
+    .highlighted-menu-explore__suffix {
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      opacity: 0.95;
+    }
+    .highlighted-menu-explore:hover,
+    .highlighted-menu-explore:focus-visible {
+      color: var(--text);
+      border-color: rgba(201, 169, 98, 0.72);
+      box-shadow:
+        inset 0 1px 0 rgba(201, 169, 98, 0.18),
+        0 6px 28px rgba(0, 0, 0, 0.32),
+        0 0 36px rgba(201, 169, 98, 0.22);
+      outline: none;
+      transform: translateY(-1px);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .highlighted-menu-explore:hover,
+      .highlighted-menu-explore:focus-visible {
+        transform: none;
+      }
+    }
+
+    /* Highlighted menu: 3 baris (meat / sides / wine), masing-masing 4 kolom di desktop */
+    .highlighted-menu-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      width: 100%;
+      text-align: left;
     }
     @media (min-width: 769px) {
-      .highlighted-menu-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+      .highlighted-menu-rows {
+        gap: 2.35rem;
       }
+    }
+    .highlighted-menu-row-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.7rem, 1.35vw, 0.78rem);
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.85rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid rgba(201, 169, 98, 0.14);
+    }
+    .highlighted-menu-grid {
+      display: grid;
+      gap: 0.75rem 0.65rem;
+      grid-template-columns: repeat(2, 1fr);
+      max-width: none;
+      margin: 0;
+    }
+    @media (min-width: 640px) {
+      .highlighted-menu-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.85rem 0.9rem;
+      }
+    }
+    /* Wine row: 3 kolom, foto satu file komposit (crop per botol) */
+    .highlighted-menu-grid--wine {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 480px) {
+      .highlighted-menu-grid--wine {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem 0.65rem;
+      }
+    }
+    /* Wine: kotak 3:5 identik tiap kolom; foto mengisi penuh (cover) supaya tidak ada yang “kecil gedean” karena beda crop sumber */
+    .highlighted-menu-image--wine-frame {
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
+      aspect-ratio: 3 / 5;
+      min-height: 0;
+      min-width: 0;
+      background:
+        radial-gradient(ellipse 72% 60% at 50% 55%, rgba(34, 30, 26, 1) 0%, rgba(18, 16, 14, 1) 48%, rgba(13, 11, 10, 1) 100%);
+    }
+    .highlighted-menu-image--wine-frame .highlighted-menu-wine-photo {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 42%;
+    }
+    .highlighted-menu-grid--wine .highlighted-menu-card {
+      gap: 0.45rem;
     }
     .highlighted-menu-card {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 0.45rem;
       margin: 0;
       padding: 0;
+      min-width: 0;
     }
     .highlighted-menu-image {
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
-      border: 1px solid rgba(201, 169, 98, 0.18);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(201, 169, 98, 0.16);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
     }
-    .highlighted-menu-image img {
+    .highlighted-menu-image img:not(.highlighted-menu-wine-photo) {
       display: block;
       width: 100%;
-      aspect-ratio: 5 / 4;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
       vertical-align: middle;
     }
+    .highlighted-menu-image--placeholder {
+      aspect-ratio: 4 / 3;
+      min-height: 0;
+      background:
+        linear-gradient(145deg, rgba(22, 20, 18, 0.95) 0%, rgba(30, 27, 24, 0.98) 45%, rgba(201, 169, 98, 0.07) 100%);
+      box-shadow: inset 0 0 0 1px rgba(201, 169, 98, 0.08);
+    }
     .highlighted-menu-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-size: clamp(0.68rem, 1.45vw, 0.82rem);
       font-weight: 600;
       color: var(--accent);
-      letter-spacing: 0.02em;
-      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.2rem;
       text-transform: uppercase;
+      line-height: 1.25;
     }
     .highlighted-menu-desc {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.65;
+      font-size: clamp(0.65rem, 1.2vw, 0.74rem);
+      line-height: 1.45;
       font-weight: 300;
     }
-    .highlighted-menu-card--collage {
-      /* same as base card now */
+    /* Kolase menu: kotak foto 4:3 sama rata per sel grid (cover) supaya portrait/landscape sama “isi”-nya */
+    .highlighted-menu-card--collage .highlighted-menu-image {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      min-width: 0;
+      min-height: 0;
+    }
+    .highlighted-menu-card--collage .highlighted-menu-image img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: unset;
+      object-fit: cover;
+      object-position: center center;
     }
 
-    /* Founder / Chef: photo + text block (grid desktop, stack mobile) */
+    /* Founder / Chef: kartu vertikal (foto lebar di atas, teks di bawah) — dua kolom simetris di desktop */
     .founder-block,
     .chef-block {
-      display: grid;
-      gap: 2rem;
-      grid-template-columns: 1fr;
-      align-items: start;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.35rem;
       max-width: 720px;
       margin: 0 auto;
+      min-width: 0;
     }
-    @media (min-width: 769px) {
-      .founder-block {
-        grid-template-columns: 280px 1fr;
-        gap: 2.5rem;
-      }
-      .chef-block {
-        grid-template-columns: 1fr 280px;
-        gap: 2.5rem;
-      }
-      .chef-block .chef-photo {
-        order: 2;
-      }
-      .chef-block .chef-text {
-        order: 1;
-      }
+    .founder-chef-pair .founder-block,
+    .founder-chef-pair .chef-block {
+      max-width: none;
     }
     .founder-photo,
     .chef-photo {
@@ -794,6 +1129,7 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
       transition: box-shadow 0.35s ease, border-color 0.35s ease;
       cursor: pointer;
+      flex-shrink: 0;
     }
     @media (min-width: 769px) {
       .founder-photo:hover,
@@ -809,6 +1145,7 @@
     .founder-text .badge,
     .chef-text .badge {
       transition: color 0.25s ease;
+      margin-bottom: 0;
     }
     @media (min-width: 769px) {
       .founder-text:hover .badge,
@@ -822,6 +1159,7 @@
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
+      object-position: center top;
       vertical-align: middle;
       transition: transform 0.4s ease;
     }
@@ -835,17 +1173,104 @@
         transform: none;
       }
     }
-    .founder-text .badge,
-    .chef-text .badge {
-      margin-bottom: 0.75rem;
+
+    .founder-text,
+    .chef-text {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
     }
-    .founder-text .section-name,
-    .chef-text .section-name {
-      margin-bottom: 0.25rem;
+    .founder-chef-pair .founder-text > *,
+    .founder-chef-pair .chef-text > * {
+      margin-top: 0;
+      margin-bottom: 0;
     }
-    .founder-text p.reveal-item:last-of-type,
-    .chef-text p.reveal-item:last-of-type {
-      margin-top: 0.75rem;
+    .founder-chef-pair .founder-text,
+    .founder-chef-pair .chef-text {
+      row-gap: 0.5rem;
+    }
+    .founder-chef-pair .founder-text .badge,
+    .founder-chef-pair .chef-text .badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      line-height: 1.35;
+    }
+    .founder-chef-pair .founder-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.35rem, 2.8vw, 1.65rem);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      margin-bottom: 0;
+      color: var(--text);
+    }
+    /* Chef: El Patrón (subtitle di DOM) = gaya headline founder; “Expert craftsmanship…” (h2) = gaya subtitle founder */
+    .founder-chef-pair #chef .chef-text .section-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.35rem, 2.8vw, 1.65rem);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      margin-bottom: 0;
+      color: var(--text);
+    }
+    .founder-chef-pair #chef .chef-text h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8125rem;
+      line-height: 1.55;
+      font-weight: 400;
+      letter-spacing: 0;
+      margin-bottom: 0;
+      max-width: 100%;
+      color: var(--text-muted);
+    }
+    .founder-chef-pair .founder-text .section-subtitle {
+      font-size: 0.8125rem;
+      line-height: 1.55;
+      max-width: 100%;
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+    }
+    .founder-chef-pair .profile-identity {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding-top: 0.45rem;
+      margin-top: 0.25rem;
+      border-top: 1px solid rgba(201, 169, 98, 0.12);
+      width: 100%;
+    }
+    .founder-chef-pair .profile-identity .section-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.125rem;
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0;
+    }
+    .founder-chef-pair .profile-role {
+      font-size: 0.8125rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .founder-chef-pair .profile-bio {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-top: 0.35rem;
+    }
+    @media (max-width: 768px) {
+      .founder-block,
+      .chef-block {
+        gap: 1.125rem;
+      }
     }
 
     /* Awards section — gradient flow top/bottom blend */
@@ -858,14 +1283,14 @@
       background-image:
         linear-gradient(180deg, transparent 0%, rgba(201, 169, 98, 0.03) 12%, transparent 25%, transparent 75%, rgba(201, 169, 98, 0.03) 88%, transparent 100%),
         radial-gradient(ellipse 72% 45% at 50% 35%, rgba(201, 169, 98, 0.055) 0%, transparent 58%);
-      border-radius: 12px;
-      border: 1px solid transparent;
-      transition: box-shadow 0.4s ease, border-color 0.4s ease;
+      border-radius: 0;
+      border: none;
+      transition: border-color 0.45s ease;
     }
     @media (min-width: 769px) {
       .awards:hover {
-        border-color: rgba(201, 169, 98, 0.12);
-        box-shadow: 0 0 0 1px rgba(201, 169, 98, 0.06);
+        border-color: transparent;
+        box-shadow: none;
       }
     }
     .awards .badge {
@@ -916,28 +1341,7 @@
       margin: 0 auto;
       background-color: var(--bg-deep);
     }
-    .awards-body {
-      max-width: 720px;
-      margin: 0 auto;
-      text-align: left;
-    }
-    .awards-body p {
-      color: var(--text-muted);
-      font-size: 1rem;
-      line-height: 1.7;
-      font-weight: 300;
-      margin-bottom: 1rem;
-    }
-    .awards-body p:last-child {
-      margin-bottom: 0;
-    }
 
-    /* Opening hours — section gradient flow */
-    #opening-hours.section {
-      background-color: transparent;
-      background-image: linear-gradient(180deg, transparent 0%, rgba(201, 169, 98, 0.02) 30%, transparent 70%, transparent 100%),
-        radial-gradient(ellipse 72% 52% at 50% 38%, rgba(201, 169, 98, 0.045) 0%, transparent 55%);
-    }
     .opening-hours-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -995,15 +1399,18 @@
         radial-gradient(ellipse 65% 55% at 50% 5%, rgba(201, 169, 98, 0.04) 0%, transparent 50%);
     }
 
-    .lokasi-outlets {
+    .lokasi-locations {
       display: flex;
       flex-direction: column;
-      gap: 1.75rem;
-      margin-bottom: 2rem;
+      gap: 1.15rem;
     }
 
-    .lokasi-outlet {
-      padding: 1.25rem 1.35rem;
+    .lokasi-location {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: 0;
+      align-items: stretch;
+      min-height: 0;
       background: linear-gradient(165deg, rgba(22, 20, 18, 0.88) 0%, rgba(22, 20, 18, 0.92) 50%, rgba(22, 20, 18, 0.88) 100%);
       background-color: rgba(22, 20, 18, 0.85);
       backdrop-filter: blur(10px);
@@ -1011,21 +1418,70 @@
       border-radius: 8px;
       border: 1px solid rgba(201, 169, 98, 0.12);
       text-align: left;
+      overflow: hidden;
       transition: transform 0.35s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       transform: perspective(800px) translateY(0) rotateX(0deg) rotateY(0deg);
     }
-    .lokasi-outlet:hover {
+    .lokasi-location:hover {
       transform: perspective(800px) translateY(-4px) rotateX(1deg) rotateY(0.5deg);
       border-color: rgba(201, 169, 98, 0.25);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 0 24px rgba(201, 169, 98, 0.06);
     }
-    .lokasi-outlet:active {
+    .lokasi-location:active {
       transform: perspective(800px) translateY(-2px) rotateX(0deg) rotateY(0deg);
       border-color: rgba(201, 169, 98, 0.28);
     }
     @media (prefers-reduced-motion: reduce) {
-      .lokasi-outlet:hover,
-      .lokasi-outlet:active { transform: translateY(-4px); }
+      .lokasi-location:hover,
+      .lokasi-location:active { transform: translateY(-4px); }
+    }
+
+    .lokasi-location-info {
+      padding: 1.15rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      border-right: 1px solid rgba(201, 169, 98, 0.1);
+    }
+
+    .lokasi-location-map {
+      min-width: 0;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+    }
+    .lokasi-location-map .lokasi-map-cell {
+      flex: 1;
+      min-height: 200px;
+      height: 100%;
+      aspect-ratio: unset;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+    }
+    @media (min-width: 769px) {
+      .lokasi-location-map .lokasi-map-cell:hover {
+        box-shadow: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .lokasi-location {
+        grid-template-columns: 1fr;
+      }
+      .lokasi-location-info {
+        border-right: none;
+        border-bottom: 1px solid rgba(201, 169, 98, 0.1);
+        padding: 1.1rem 1.15rem;
+      }
+      .lokasi-location-map {
+        min-height: 180px;
+      }
+      .lokasi-location-map .lokasi-map-cell {
+        min-height: 180px;
+        aspect-ratio: 16 / 10;
+      }
     }
 
     .lokasi-outlet-name {
@@ -1044,55 +1500,6 @@
       font-weight: 300;
       margin: 0;
     }
-    .lokasi-wa-link {
-      display: inline-block;
-      margin-top: 0.75rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--accent);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      transition: color 0.25s ease, text-decoration-color 0.2s ease;
-    }
-    .lokasi-wa-link:hover,
-    .lokasi-wa-link:focus-visible {
-      text-decoration: underline;
-      outline: none;
-    }
-    .lokasi-wa-link:focus-visible {
-      box-shadow: 0 0 0 2px var(--accent);
-      border-radius: 2px;
-    }
-
-    .lokasi-map-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem 1rem;
-    }
-
-    @media (max-width: 640px) {
-      .lokasi-map-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .lokasi-map-col {
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-    }
-
-    .lokasi-map-info {
-      margin: 0;
-      text-align: center;
-      font-size: 0.95rem;
-      line-height: 1.4;
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
     .lokasi-map-cell {
       position: relative;
       border-radius: 10px;
@@ -1231,8 +1638,8 @@
       .cta-wa:active {
         transform: none;
       }
-      .lokasi-outlet:hover,
-      .lokasi-outlet:active {
+      .lokasi-location:hover,
+      .lokasi-location:active {
         transform: none;
       }
       .lokasi-map-overlay:active .lokasi-map-hint {
@@ -1406,9 +1813,9 @@
 </head>
 <body>
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
-  <a href="https://wa.me/6281250070094" class="floating-wa" id="floating-wa" target="_blank" rel="noopener" aria-label="Reserve via WhatsApp" data-json-href="ctaBlock.waUrl">
+  <a href="https://wa.me/6281250070094" class="floating-wa" id="floating-wa" target="_blank" rel="noopener" aria-label="Book Now via WhatsApp" data-json-href="ctaBlock.waUrl">
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    <span>Reserve</span>
+    <span data-json="ctaBlock.floatingLabel">Book Now</span>
   </a>
   <header class="site-header" id="site-header" aria-label="Navigation">
     <span class="brand-name" data-json="hero.brandName">Meatguy Steakhouse</span>
@@ -1437,11 +1844,27 @@
         <h2 class="brand-name" data-json="hero.brandName">Meatguy Steakhouse</h2>
         <p class="label" data-json="hero.label">Premium Dry-Aged Steak</p>
         <h1 data-json="hero.headline">Where Passion Meets Perfection</h1>
-        <p class="tagline"><span data-json="hero.tagline[0]">Experience the craft. Reserve your table or ask us anything.</span><span class="tagline-line2" data-json="hero.tagline[1]">We're one message away.</span></p>
+        <p class="tagline"><span data-json="hero.tagline">Experience the craft.
+Reserve your table or ask us anything.</span></p>
         <a href="https://wa.me/628119628008" class="cta-hero" target="_blank" rel="noopener" data-json-href="hero.waUrl">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          <span data-json="hero.ctaText">Chat via WhatsApp</span>
+          <span data-json="hero.ctaText">Book Now</span>
         </a>
+        <div class="hero-opening-hours" id="opening-hours">
+          <p class="hero-opening-hours__label" data-json="openingHours.title">Opening hours</p>
+          <div class="opening-hours-grid">
+            <div class="opening-hours-card">
+              <h3 data-json="openingHours.bintaro.name">Meatguy Bintaro</h3>
+              <p data-json="openingHours.bintaro.lines[0]">Tuesday – Friday: 15:00 – 22:00</p>
+              <p data-json="openingHours.bintaro.lines[1]">Saturday – Sunday: 11:00 – 22:00</p>
+            </div>
+            <div class="opening-hours-card">
+              <h3 data-json="openingHours.scbd.name">Meatguy SCBD</h3>
+              <p data-json="openingHours.scbd.lines[0]">Tuesday – Thursday: 11:00 – 15:00 & 17:30 – 23:00</p>
+              <p data-json="openingHours.scbd.lines[1]">Friday – Saturday: 11:00 – 15:00 & 17:30 – 24:00</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="scroll-hint">
         <span class="line"></span>
@@ -1454,81 +1877,220 @@
       <h2 class="reveal-item" data-json="about.title">More than a meal</h2>
       <p class="reveal-item" data-json="about.paragraphs[0]">At Meatguy Steakhouse, every cut is chosen and prepared with passion, precision, and respect for flavour. We’re honoured to be ranked No. 90 on the World’s 101 Best Steak Restaurants (2025).</p>
       <p class="reveal-item" data-json="about.paragraphs[1]">Bintaro & SCBD — one message away for reservations and inquiries.</p>
+      <!-- Tiga highlight video: MP4 di assets/ — pratinjau frame awal, play hanya setelah klik (tanpa autoplay) -->
+      <div class="about-video-grid reveal-item" aria-label="Highlight video Meatguy Steakhouse">
+        <figure class="about-video-card about-video-card--native">
+          <video
+            class="about-video-el"
+            playsinline
+            preload="metadata"
+            muted
+            data-src="assets/about-highlight-1.mp4"
+            title="Highlight video 1 — Meatguy Steakhouse"
+          ></video>
+          <button type="button" class="about-video-trigger" aria-label="Play highlight video 1">
+            <span class="about-video-trigger__icon" aria-hidden="true">▶</span>
+            <span class="about-video-trigger__text">Play Video</span>
+          </button>
+        </figure>
+        <figure class="about-video-card about-video-card--native">
+          <video
+            class="about-video-el"
+            playsinline
+            preload="metadata"
+            muted
+            data-src="assets/about-highlight-2.mp4"
+            title="Highlight video 2 — Meatguy Steakhouse"
+          ></video>
+          <button type="button" class="about-video-trigger" aria-label="Play highlight video 2">
+            <span class="about-video-trigger__icon" aria-hidden="true">▶</span>
+            <span class="about-video-trigger__text">Play Video</span>
+          </button>
+        </figure>
+        <figure class="about-video-card about-video-card--native">
+          <video
+            class="about-video-el"
+            playsinline
+            preload="metadata"
+            muted
+            data-src="assets/about-highlight-3.mp4"
+            title="Highlight video 3 — Meatguy Steakhouse"
+          ></video>
+          <button type="button" class="about-video-trigger" aria-label="Play highlight video 3">
+            <span class="about-video-trigger__icon" aria-hidden="true">▶</span>
+            <span class="about-video-trigger__text">Play Video</span>
+          </button>
+        </figure>
+      </div>
     </section>
 
     <section class="section reveal" id="highlighted-menu">
-      <p class="badge reveal-item">Highlighted menu</p>
-      <h2 class="reveal-item">Signature cuts</h2>
-      <div class="highlighted-menu-grid reveal-item">
-        <div class="highlighted-menu-card highlighted-menu-card--collage">
-          <div class="highlighted-menu-image">
-            <img src="assets/highlighted-tomahawk.png" alt="The Hanging Tomahawk — slow-smoked and carved tableside" loading="lazy" />
-          </div>
-          <div class="highlighted-menu-text">
-            <h3 class="highlighted-menu-title">The Hanging Tomahawk</h3>
-            <p class="highlighted-menu-desc">Signature Hanging Tomahawk ~1.8kg, slow-smoked & carved tableside.</p>
+      <h2 class="reveal-item">Highlighted menu</h2>
+      <div class="highlighted-menu-rows reveal-item">
+        <div class="highlighted-menu-row">
+          <h3 class="highlighted-menu-row-title">Signature cuts</h3>
+          <div class="highlighted-menu-grid">
+            <div class="highlighted-menu-card highlighted-menu-card--collage">
+              <div class="highlighted-menu-image">
+                <img src="assets/highlighted-tomahawk.png" alt="The Hanging Tomahawk — slow-smoked and carved tableside" loading="lazy" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">The Hanging Tomahawk</h3>
+                <p class="highlighted-menu-desc">~1.8kg, slow-smoked & carved tableside.</p>
+              </div>
+            </div>
+            <div class="highlighted-menu-card highlighted-menu-card--collage">
+              <div class="highlighted-menu-image">
+                <img src="assets/highlighted-shortloin-wagyu.png" alt="Shortloin Fullblood Wagyu — Australian wagyu shortloin" loading="lazy" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Shortloin Fullblood Wagyu</h3>
+                <p class="highlighted-menu-desc">Per 100g · Australian MB 8–9.</p>
+              </div>
+            </div>
+            <div class="highlighted-menu-card highlighted-menu-card--collage">
+              <div class="highlighted-menu-image">
+                <img src="assets/highlighted-wagyu.png" alt="A5 Wagyu MB 12 Japanese wagyu striploin" loading="lazy" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">A5 Wagyu MB 12</h3>
+                <p class="highlighted-menu-desc">Per 100g · Japanese striploin.</p>
+              </div>
+            </div>
+            <div class="highlighted-menu-card highlighted-menu-card--collage">
+              <div class="highlighted-menu-image">
+                <img src="assets/highlighted-galician.png" alt="Galician Rubia bone-in cuts" loading="lazy" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Galician Rubia</h3>
+                <p class="highlighted-menu-desc">Per 100g · Bone-in rubia gallega.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="highlighted-menu-card highlighted-menu-card--collage">
-          <div class="highlighted-menu-image">
-            <img src="assets/highlighted-shortloin-wagyu.png" alt="Shortloin Fullblood Wagyu — Australian wagyu shortloin" loading="lazy" />
-          </div>
-          <div class="highlighted-menu-text">
-            <h3 class="highlighted-menu-title">Shortloin Fullblood Wagyu (PER 100 G)</h3>
-            <p class="highlighted-menu-desc">Australian wagyu shortloin MB 8–9.</p>
+        <div class="highlighted-menu-row">
+          <h3 class="highlighted-menu-row-title">Side dishes</h3>
+          <div class="highlighted-menu-grid">
+            <div class="highlighted-menu-card highlighted-menu-card--collage">
+              <div class="highlighted-menu-image">
+                <img src="assets/highlighted-side-tartare-caviar.png" alt="Gourmet beef tartare on toasted bread with black caviar and dill" loading="lazy" decoding="async" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Dry aged tartare with caviar</h3>
+                <p class="highlighted-menu-desc">Dry aged wagyu, sourdough toast, with caviar.</p>
+              </div>
+            </div>
+            <div class="highlighted-menu-card highlighted-menu-card--collage">
+              <div class="highlighted-menu-image">
+                <img src="assets/highlighted-side-consomme.png" alt="Wagyu consommé with tortellini, peas, and pea shoots in a white bowl" loading="lazy" decoding="async" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Wagyu beef consommé</h3>
+                <p class="highlighted-menu-desc">Clear wagyu broth, foie gras, mushroom tortellini.</p>
+              </div>
+            </div>
+            <div class="highlighted-menu-card highlighted-menu-card--collage">
+              <div class="highlighted-menu-image">
+                <img src="assets/highlighted-side-photo-1.png" alt="Seared beef slices with sauce, gourmet plating" loading="lazy" decoding="async" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Dry aged beef tataki</h3>
+                <p class="highlighted-menu-desc">Dry aged wagyu, cauliflower and chives oil puree.</p>
+              </div>
+            </div>
+            <div class="highlighted-menu-card highlighted-menu-card--collage">
+              <div class="highlighted-menu-image">
+                <img src="assets/highlighted-side-photo-2.png" alt="Roasted bone marrow with toasted bread" loading="lazy" decoding="async" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Bone marrow</h3>
+                <p class="highlighted-menu-desc">Bone marrow with beef ragout and thin brioche.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="highlighted-menu-card highlighted-menu-card--collage">
-          <div class="highlighted-menu-image">
-            <img src="assets/highlighted-wagyu.png" alt="A5 Wagyu MB 12 Japanese wagyu striploin" loading="lazy" />
-          </div>
-          <div class="highlighted-menu-text">
-            <h3 class="highlighted-menu-title">A5 Wagyu MB 12 (PER 100 G)</h3>
-            <p class="highlighted-menu-desc">Japanese wagyu striploin.</p>
-          </div>
-        </div>
-        <div class="highlighted-menu-card highlighted-menu-card--collage">
-          <div class="highlighted-menu-image">
-            <img src="assets/highlighted-galician.png" alt="Galician Rubia bone-in cuts" loading="lazy" />
-          </div>
-          <div class="highlighted-menu-text">
-            <h3 class="highlighted-menu-title">Galician Rubia (PER 100 G)</h3>
-            <p class="highlighted-menu-desc">Bone-in cuts of rubia gallega cattle.</p>
+        <div class="highlighted-menu-row">
+          <h3 class="highlighted-menu-row-title">Wine</h3>
+          <div class="highlighted-menu-grid highlighted-menu-grid--wine">
+            <div class="highlighted-menu-card">
+              <div class="highlighted-menu-image highlighted-menu-image--wine-frame">
+                <img class="highlighted-menu-wine-photo" src="assets/wine-penfolds-grange.png" alt="" role="presentation" loading="lazy" decoding="async" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Penfolds BIN 95 Grange</h3>
+                <p class="highlighted-menu-desc">Australia · South Australia · 2009</p>
+              </div>
+            </div>
+            <div class="highlighted-menu-card">
+              <div class="highlighted-menu-image highlighted-menu-image--wine-frame">
+                <img class="highlighted-menu-wine-photo" src="assets/wine-mouton-rothschild.png" alt="" role="presentation" loading="lazy" decoding="async" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Château Mouton Rothschild</h3>
+                <p class="highlighted-menu-desc">Premier Grand Cru Classé · France · Pauillac, Bordeaux · 2012</p>
+              </div>
+            </div>
+            <div class="highlighted-menu-card">
+              <div class="highlighted-menu-image highlighted-menu-image--wine-frame">
+                <img class="highlighted-menu-wine-photo" src="assets/wine-leeuwin-estate.png" alt="" role="presentation" loading="lazy" decoding="async" />
+              </div>
+              <div class="highlighted-menu-text">
+                <h3 class="highlighted-menu-title">Leeuwin Estate Art Series Cabernet Sauvignon</h3>
+                <p class="highlighted-menu-desc">Australia · Margaret River, Western Australia · 2012</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <a
+        class="highlighted-menu-explore reveal-item"
+        href="https://meatguysteakhouse.com/menus/scbd"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Explore more menu — full menu Meatguy Steakhouse SCBD (opens in new tab)"
+      >
+        <span class="highlighted-menu-explore__label">
+          Explore More Menu<span class="highlighted-menu-explore__suffix" aria-hidden="true"> -&gt;</span>
+        </span>
+      </a>
     </section>
 
-    <section class="section reveal" id="founder">
-      <div class="founder-block">
-        <div class="founder-photo reveal-item" data-parallax-img role="button" tabindex="0" aria-label="View founder photo full size">
-          <img data-json-src="founder.imageUrl" alt="Dimas Ramadhan Pangestu" loading="lazy" />
+    <div class="founder-chef-pair">
+      <section class="section reveal founder-chef-panel" id="founder" aria-label="The Founder">
+        <div class="founder-block">
+          <div class="founder-photo reveal-item" data-parallax-img role="button" tabindex="0" aria-label="View founder photo full size">
+            <img data-json-src="founder.imageUrl" alt="Dimas Ramadhan Pangestu" loading="lazy" />
+          </div>
+          <div class="founder-text reveal-item">
+            <p class="badge" data-json="founder.badge">The Founder</p>
+            <h2 data-json="founder.title">Dimsthemeatguy</h2>
+            <p class="section-subtitle" data-json="founder.subtitle">The visionary behind Meatguy Steakhouse</p>
+            <div class="profile-identity">
+              <p class="section-name" data-json="founder.name">Dimas Ramadhan Pangestu</p>
+              <p class="profile-role" data-json="founder.role">Founder of Meatguy Steakhouse</p>
+            </div>
+            <p class="profile-bio" data-json="founder.paragraphs[0]">Dimas (Dimsthemeatguy) turned a love for meat into a movement — from content and community to judge at the World Steak Challenge and, now, Meatguy Steakhouse.</p>
+          </div>
         </div>
-        <div class="founder-text reveal-item">
-          <p class="badge" data-json="founder.badge">The Founder</p>
-          <h2 data-json="founder.title">Dimsthemeatguy</h2>
-          <p class="section-subtitle" data-json="founder.subtitle">The visionary behind Meatguy Steakhouse</p>
-          <p class="section-name" data-json="founder.name">Dimas Ramadhan Pangestu</p>
-          <p data-json="founder.role">Founder of Meatguy Steakhouse</p>
-          <p class="reveal-item" data-json="founder.paragraphs[0]">Dimas (Dimsthemeatguy) turned a love for meat into a movement — from content and community to judge at the World Steak Challenge and, now, Meatguy Steakhouse.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section reveal" id="chef">
-      <div class="chef-block">
-        <div class="chef-photo reveal-item" data-parallax-img role="button" tabindex="0" aria-label="View chef photo full size">
-          <img data-json-src="chef.imageUrl" alt="Chef Teuku Wahyudi" loading="lazy" />
+      <section class="section reveal founder-chef-panel" id="chef" aria-label="Executive Chef">
+        <div class="chef-block">
+          <div class="chef-photo reveal-item" data-parallax-img role="button" tabindex="0" aria-label="View chef photo full size">
+            <img data-json-src="chef.imageUrl" alt="Chef Teuku Wahyudi" loading="lazy" />
+          </div>
+          <div class="chef-text reveal-item">
+            <p class="badge" data-json="chef.badge">Meet Our Meat Master</p>
+            <p class="section-subtitle" data-json="chef.subtitle">El Patrón</p>
+            <h2 data-json="chef.title">Expert craftsmanship in every cut</h2>
+            <div class="profile-identity">
+              <p class="section-name" data-json="chef.name">Chef Teuku Wahyudi</p>
+            </div>
+            <p class="profile-bio" data-json="chef.paragraphs[0]">El Patrón brings a lifetime of passion to every cut: great steak from heart, not just heat — from grill to plate.</p>
+          </div>
         </div>
-        <div class="chef-text reveal-item">
-          <p class="badge" data-json="chef.badge">Meet Our Meat Master</p>
-          <h2 data-json="chef.title">Expert craftsmanship in every cut</h2>
-          <p class="section-name" data-json="chef.name">Chef Teuku Wahyudi</p>
-          <p class="section-subtitle" data-json="chef.subtitle">El Patrón — Executive Chef & Meat Master</p>
-          <p class="reveal-item" data-json="chef.paragraphs[0]">El Patrón brings a lifetime of passion to every cut: great steak from heart, not just heat — from grill to plate.</p>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <section class="awards reveal" id="awards">
       <p class="badge reveal-item" data-json="awards.badge">Awards</p>
@@ -1536,64 +2098,40 @@
       <div class="awards-logos-row reveal-item">
         <img src="assets/awards-logos-only.png" alt="Exquisite Awards 2023, World's 101 Best Steak Restaurants, Exquisite Awards 2024" loading="lazy" />
       </div>
-      <div class="awards-body">
-        <p class="reveal-item" data-json="awards.paragraphs[0]">At Meatguy Steakhouse, everything begins with passion and craftsmanship. We select only the finest cuts and prepare each with care, precision, and respect for flavor.</p>
-        <p class="reveal-item" data-json="awards.paragraphs[1]">More than just a meal, we aim to create an experience, one that stirs your senses and lingers long after the last bite.</p>
-        <p class="reveal-item" data-json="awards.paragraphs[2]">In 2025, we are honored to be ranked No. 90 on the World's 101 Best Steak Restaurants, a recognition that reflects our continued pursuit of excellence in every cut we serve.</p>
-      </div>
-    </section>
-
-    <section class="section reveal" id="opening-hours">
-      <h2 class="reveal-item" data-json="openingHours.title">Opening hours</h2>
-      <div class="opening-hours-grid reveal-item">
-        <div class="opening-hours-card">
-          <h3 data-json="openingHours.bintaro.name">Meatguy Bintaro</h3>
-          <p data-json="openingHours.bintaro.lines[0]">Tuesday – Friday: 15:00 – 22:00</p>
-          <p data-json="openingHours.bintaro.lines[1]">Saturday – Sunday: 11:00 – 22:00</p>
-        </div>
-        <div class="opening-hours-card">
-          <h3 data-json="openingHours.scbd.name">Meatguy SCBD</h3>
-          <p data-json="openingHours.scbd.lines[0]">Tuesday – Thursday: 11:00 – 15:00 & 17:30 – 23:00</p>
-          <p data-json="openingHours.scbd.lines[1]">Friday – Saturday: 11:00 – 15:00 & 17:30 – 24:00</p>
-        </div>
-      </div>
     </section>
 
     <section class="section reveal lokasi-section" id="lokasi">
       <p class="badge reveal-item" data-json="lokasi.badge">Lokasi</p>
       <h2 class="reveal-item" data-json="lokasi.title">Visit us</h2>
-      <div class="lokasi-outlets">
-        <article class="lokasi-outlet reveal-item">
-          <h3 class="lokasi-outlet-name" data-json="lokasi.bintaro.name">Meatguy Steakhouse Bintaro</h3>
-          <p class="lokasi-address" data-json="lokasi.bintaro.address">Jl. Maleo JA 1 No.1, Pd. Pucung, Kec. Pd. Aren, Kota Tangerang Selatan, Banten 15229</p>
-          <a href="https://wa.me/6281250070094" class="lokasi-wa-link" target="_blank" rel="noopener" data-json-href="lokasi.bintaro.waUrl" aria-label="Contact Bintaro via WhatsApp"><span data-json="lokasi.waLinkText">Contact via WhatsApp</span></a>
-        </article>
-        <article class="lokasi-outlet reveal-item">
-          <h3 class="lokasi-outlet-name" data-json="lokasi.scbd.name">Meatguy Steakhouse SCBD</h3>
-          <p class="lokasi-address" data-json="lokasi.scbd.address">SCBD, Jl. Jend. Sudirman Kav 52-53 No. LOT 8, RT.5/RW.1, Senayan, Kec. Kby. Baru, Jakarta Selatan 12190</p>
-          <a href="https://wa.me/6281250070094" class="lokasi-wa-link" target="_blank" rel="noopener" data-json-href="lokasi.scbd.waUrl" aria-label="Contact SCBD via WhatsApp"><span data-json="lokasi.waLinkText">Contact via WhatsApp</span></a>
-        </article>
-      </div>
-
-      <div class="lokasi-map-grid">
-        <div class="lokasi-map-col reveal-item">
-          <div class="lokasi-map-cell">
-            <iframe class="lokasi-map-iframe" title="Peta Meatguy Steakhouse Bintaro" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-lokasi-embed="bintaro" src="https://maps.google.com/maps?q=-6.29876,106.71497&amp;z=16&amp;output=embed"></iframe>
-            <a href="https://maps.app.goo.gl/AdwhndEGk2UGVY4y5" target="_blank" rel="noopener noreferrer" class="lokasi-map-overlay" data-json-href="lokasi.bintaro.mapsUrl" aria-label="Open Meatguy Steakhouse Bintaro in Google Maps">
-              <span class="lokasi-map-hint"><span data-json="lokasi.bintaro.mapCta">Open in Google Maps</span></span>
-            </a>
+      <div class="lokasi-locations">
+        <article class="lokasi-location reveal-item">
+          <div class="lokasi-location-info">
+            <h3 class="lokasi-outlet-name" data-json="lokasi.bintaro.name">Meatguy Steakhouse Bintaro</h3>
+            <p class="lokasi-address" data-json="lokasi.bintaro.address">Jl. Maleo JA 1 No.1, Pd. Pucung, Kec. Pd. Aren, Kota Tangerang Selatan, Banten 15229</p>
           </div>
-          <p class="lokasi-map-info" data-json="lokasi.bintaro.mapInfo">Bintaro</p>
-        </div>
-        <div class="lokasi-map-col reveal-item">
-          <div class="lokasi-map-cell">
-            <iframe class="lokasi-map-iframe" title="Peta Meatguy Steakhouse SCBD" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-lokasi-embed="scbd" src="https://maps.google.com/maps?q=-6.22535,106.80905&amp;z=16&amp;output=embed"></iframe>
-            <a href="https://maps.app.goo.gl/cyGwSu9Nnfq9JXZf6" target="_blank" rel="noopener noreferrer" class="lokasi-map-overlay" data-json-href="lokasi.scbd.mapsUrl" aria-label="Open Meatguy Steakhouse SCBD in Google Maps">
-              <span class="lokasi-map-hint"><span data-json="lokasi.scbd.mapCta">Open in Google Maps</span></span>
-            </a>
+          <div class="lokasi-location-map">
+            <div class="lokasi-map-cell">
+              <iframe class="lokasi-map-iframe" title="Peta Meatguy Steakhouse Bintaro" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-lokasi-embed="bintaro" src="https://maps.google.com/maps?q=-6.29876,106.71497&amp;z=16&amp;output=embed"></iframe>
+              <a href="https://maps.app.goo.gl/AdwhndEGk2UGVY4y5" target="_blank" rel="noopener noreferrer" class="lokasi-map-overlay" data-json-href="lokasi.bintaro.mapsUrl" aria-label="Open Meatguy Steakhouse Bintaro in Google Maps">
+                <span class="lokasi-map-hint"><span data-json="lokasi.bintaro.mapCta">Open in Google Maps</span></span>
+              </a>
+            </div>
           </div>
-          <p class="lokasi-map-info" data-json="lokasi.scbd.mapInfo">SCBD</p>
-        </div>
+        </article>
+        <article class="lokasi-location reveal-item">
+          <div class="lokasi-location-info">
+            <h3 class="lokasi-outlet-name" data-json="lokasi.scbd.name">Meatguy Steakhouse SCBD</h3>
+            <p class="lokasi-address" data-json="lokasi.scbd.address">SCBD, Jl. Jend. Sudirman Kav 52-53 No. LOT 8, RT.5/RW.1, Senayan, Kec. Kby. Baru, Jakarta Selatan 12190</p>
+          </div>
+          <div class="lokasi-location-map">
+            <div class="lokasi-map-cell">
+              <iframe class="lokasi-map-iframe" title="Peta Meatguy Steakhouse SCBD" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-lokasi-embed="scbd" src="https://maps.google.com/maps?q=-6.22535,106.80905&amp;z=16&amp;output=embed"></iframe>
+              <a href="https://maps.app.goo.gl/cyGwSu9Nnfq9JXZf6" target="_blank" rel="noopener noreferrer" class="lokasi-map-overlay" data-json-href="lokasi.scbd.mapsUrl" aria-label="Open Meatguy Steakhouse SCBD in Google Maps">
+                <span class="lokasi-map-hint"><span data-json="lokasi.scbd.mapCta">Open in Google Maps</span></span>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   </main>
@@ -1930,6 +2468,90 @@
           });
         });
       }
+
+      document.querySelectorAll('.about-video-card--native').forEach(function (card) {
+        var video = card.querySelector('.about-video-el');
+        if (!video) return;
+        var dataSrc = video.getAttribute('data-src');
+        if (!dataSrc) return;
+
+        function primeBlurPreview() {
+          if (video.getAttribute('src')) return;
+          video.src = dataSrc;
+          var afterSeek = function () {
+            video.pause();
+          };
+          var grabFrame = function () {
+            video.addEventListener('seeked', afterSeek, { once: true });
+            try {
+              video.currentTime = 0.12;
+            } catch (err) {
+              video.pause();
+            }
+          };
+          if (video.readyState >= 2) {
+            grabFrame();
+          } else {
+            video.addEventListener('loadeddata', grabFrame, { once: true });
+          }
+        }
+
+        if ('IntersectionObserver' in window) {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                  primeBlurPreview();
+                  observer.disconnect();
+                }
+              });
+            },
+            { rootMargin: '100px', threshold: 0.02 }
+          );
+          observer.observe(card);
+        } else {
+          primeBlurPreview();
+        }
+      });
+
+      document.querySelectorAll('.about-video-card').forEach(function (card) {
+        var embed = card.getAttribute('data-ig-embed');
+        var fallback = card.getAttribute('data-ig-fallback');
+        var trigger = card.querySelector('.about-video-trigger');
+        var iframe = card.querySelector('.about-video-iframe');
+        var video = card.querySelector('.about-video-el');
+        if (!trigger) return;
+        trigger.addEventListener('click', function () {
+          if (video && card.classList.contains('about-video-card--native')) {
+            document.querySelectorAll('.about-video-el').forEach(function (v) {
+              if (v !== video) {
+                v.pause();
+              }
+            });
+            var src = video.getAttribute('data-src');
+            if (src && !video.getAttribute('src')) {
+              video.src = src;
+            }
+            video.muted = false;
+            video.controls = true;
+            card.classList.add('is-loaded');
+            var playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise.catch(function () {});
+            }
+            return;
+          }
+          if (embed && embed.length > 0 && iframe) {
+            iframe.src = embed;
+            iframe.removeAttribute('hidden');
+            card.classList.add('is-loaded');
+            return;
+          }
+          if (fallback) {
+            window.open(fallback, '_blank', 'noopener,noreferrer');
+          }
+        });
+      });
     })();
   </script>
 </body>
