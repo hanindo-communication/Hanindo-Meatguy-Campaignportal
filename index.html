@@ -592,18 +592,38 @@
 
     .about-video-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.85rem;
       margin-top: 1.75rem;
       width: 100%;
       min-width: 0;
     }
+    /* Mobile: tetap 3 kolom nyamping (bukan stack vertikal), kartu lebih compact */
     @media (max-width: 700px) {
       .about-video-grid {
-        grid-template-columns: 1fr;
-        max-width: 320px;
-        margin-left: auto;
-        margin-right: auto;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(0.35rem, 2.5vw, 0.55rem);
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+      }
+      .about-video-card {
+        max-height: min(52vw, 260px);
+        border-radius: 8px;
+      }
+      .about-video-trigger {
+        padding: 0.45rem 0.35rem;
+        gap: 0.3rem;
+        font-size: 0.52rem;
+        letter-spacing: 0.06em;
+      }
+      .about-video-trigger__icon {
+        width: 2.1rem;
+        height: 2.1rem;
+        font-size: 0.78rem;
+      }
+      .about-video-card--native .about-video-trigger__text {
+        font-size: 0.54rem;
       }
     }
     .about-video-card {
@@ -1010,23 +1030,31 @@
         gap: 0.85rem 0.9rem;
       }
     }
-    /* Wine row: 3 kolom, foto satu file komposit (crop per botol) */
+    /* Wine row: sama dengan grid side dish — 2 kolom mobile, 3 kolom desktop; foto 4:3 */
     .highlighted-menu-grid--wine {
-      grid-template-columns: 1fr;
-      gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem 0.65rem;
     }
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       .highlighted-menu-grid--wine {
         grid-template-columns: repeat(3, 1fr);
-        gap: 0.75rem 0.65rem;
+        gap: 0.85rem 0.9rem;
       }
     }
-    /* Wine: kotak 3:5 identik tiap kolom; foto mengisi penuh (cover) supaya tidak ada yang “kecil gedean” karena beda crop sumber */
+    /* 3 botol di grid 2 kolom: item ketiga selebar satu kolom, di tengah baris */
+    @media (max-width: 639px) {
+      .highlighted-menu-grid--wine .highlighted-menu-card:nth-child(3) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc((100% - 0.65rem) / 2);
+      }
+    }
+    /* Wine: kotak 4:3 sejajar ukuran foto side dish; cover + posisi aman untuk botol */
     .highlighted-menu-image--wine-frame {
       position: relative;
       box-sizing: border-box;
       overflow: hidden;
-      aspect-ratio: 3 / 5;
+      aspect-ratio: 4 / 3;
       min-height: 0;
       min-width: 0;
       background:
@@ -1039,7 +1067,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 42%;
+      object-position: center center;
     }
     .highlighted-menu-grid--wine .highlighted-menu-card {
       gap: 0.45rem;
