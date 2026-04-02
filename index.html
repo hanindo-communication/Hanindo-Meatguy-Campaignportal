@@ -46,6 +46,8 @@
 
     html {
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      max-width: 100%;
     }
 
     body {
@@ -54,11 +56,13 @@
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
+      max-width: 100%;
     }
 
     /* Main: gradient flow continuous (tidak patah antar section) */
     main {
       position: relative;
+      overflow-x: hidden;
       background-color: var(--bg-deep);
       background-image:
         linear-gradient(180deg, var(--bg-deep) 0%, rgba(13,11,10,0.97) 8%, transparent 22%, transparent 78%, rgba(13,11,10,0.97) 92%, var(--bg-deep) 100%),
@@ -1772,6 +1776,25 @@
       .floating-wa { transition: none; }
     }
 
+    /* Mobile: no magnetic offset, stay inside viewport (no horizontal “empty strip”) */
+    @media (max-width: 768px) {
+      .floating-wa {
+        --magnetic-x: 0px !important;
+        --magnetic-y: 0px !important;
+        right: max(0.75rem, env(safe-area-inset-right, 0px));
+        bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+        left: auto;
+        max-width: calc(100vw - 1.25rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+        box-sizing: border-box;
+      }
+      .floating-wa.visible {
+        transform: translate(0, 0);
+      }
+      .floating-wa:not(.visible) {
+        transform: translate(0, 10px);
+      }
+    }
+
     /* Photo lightbox (founder/chef) */
     .photo-lightbox {
       position: fixed;
@@ -2415,6 +2438,15 @@ Reserve your table or ask us anything.</span></p>
           });
         }
       }
+
+      function resetFloatingWaForMobile() {
+        var fw = document.getElementById('floating-wa');
+        if (!fw || !window.matchMedia('(max-width: 768px)').matches) return;
+        fw.style.removeProperty('--magnetic-x');
+        fw.style.removeProperty('--magnetic-y');
+      }
+      window.addEventListener('resize', resetFloatingWaForMobile);
+      resetFloatingWaForMobile();
 
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         var parallaxImgs = document.querySelectorAll('[data-parallax-img]');
