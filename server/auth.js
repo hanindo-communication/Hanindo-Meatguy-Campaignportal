@@ -101,12 +101,8 @@ function postLogin(req, res) {
     secure,
     path: '/',
   });
-  const nextUrl = req.body && req.body.next ? String(req.body.next) : '';
-  let dest = '/';
-  if (nextUrl.startsWith('/') && !nextUrl.startsWith('//')) {
-    dest = nextUrl;
-  }
-  res.redirect(302, dest);
+  // Always land on the dashboard (landing list) after login — not on a deep `next` URL.
+  res.redirect(302, '/');
 }
 
 function getLogout(req, res) {
