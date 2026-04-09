@@ -2,7 +2,6 @@ const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { discoverLandings } = require('./discover-landings');
-const { siteStatic } = require('./site-static');
 const {
   requireAuth,
   postLogin,
@@ -14,36 +13,9 @@ const PORT = parseInt(process.env.PORT || '3788', 10);
 const siteDir = path.join(__dirname, '..', 'site');
 const loginPath = path.join(siteDir, 'login.html');
 const dashboardPath = path.join(siteDir, 'dashboard.html');
-const ON_VERCEL = !!process.env.VERCEL;
 
 const app = express();
 app.set('trust proxy', 1);
-
-// #region agent log
-app.use((req, res, next) => {
-  fetch('http://127.0.0.1:7685/ingest/dd0e9d1b-fabc-4eac-ae9d-840e8f22f65d', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Debug-Session-Id': 'aa6832',
-    },
-    body: JSON.stringify({
-      sessionId: 'aa6832',
-      hypothesisId: 'H-vercel-path',
-      location: 'server/index.js:req',
-      message: 'express_request',
-      data: {
-        method: req.method,
-        path: req.path,
-        url: req.url,
-        vercel: String(ON_VERCEL),
-      },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  next();
-});
-// #endregion
 
 app.use(cookieParser());
 app.get('/session', (req, res) => {
@@ -83,11 +55,7 @@ app.get('/api/landing-pages', (req, res) => {
   }
 });
 
-if (ON_VERCEL) {
-  app.use(siteStatic(siteDir));
-} else {
-  app.use(express.static(siteDir));
-}
+app.use(express.static(siteDir));
 
 module.exports = app;
 

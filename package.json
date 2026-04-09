@@ -1,7 +1,7 @@
 {
   "name": "meatguy-landing",
   "private": true,
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "dev": "PORT=3790 node server/index.js"
