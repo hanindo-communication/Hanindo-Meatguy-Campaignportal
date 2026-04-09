@@ -52,6 +52,10 @@ app.get('/api/landing-pages', (req, res) => {
 
 app.use(express.static(publicDir));
 
-app.listen(PORT, () => {
-  console.log(`Campaign portal at http://localhost:${PORT}`);
-});
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Campaign portal at http://localhost:${PORT}`);
+  });
+}
