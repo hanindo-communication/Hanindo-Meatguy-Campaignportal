@@ -10,7 +10,7 @@ One-pager untuk mengarahkan traffic dari iklan video ke **WhatsApp** (reservasi 
 
 ## Cara pakai
 
-1. **Lokal:** `npm install` lalu **`npm start`** → **http://localhost:3788**. Form login ada di **`/`** (root); setelah masuk, **`/`** menampilkan direktori semua landing (grid + pratinjau). Kirim password lewat **`POST /session`**. Password default dev: `admin123` kecuali `PORTAL_PASSWORD` di `.env`. Landing utama: **http://localhost:3788/202604/passion-meets-perfection**. URL lama `/login` dan `/dashboard` dialihkan ke **`/`**. Salin [`.env.example`](.env.example) ke `.env` dan set `SESSION_SECRET` untuk produksi.
+1. **Lokal:** `npm install` lalu **`npm start`** → **http://localhost:3788**. Form login ada di **`/`** (root); **setelah login sukses selalu ke dashboard** (grid semua landing); parameter `?next=` hanya dipakai saat redirect balik ke form jika password salah, bukan untuk langsung membuka satu landing. Kirim password lewat **`POST /session`**. Password default dev: `admin123` kecuali `PORTAL_PASSWORD` di `.env`. Landing utama: **http://localhost:3788/202604/passion-meets-perfection**. URL lama `/login` dan `/dashboard` dialihkan ke **`/`**. Salin [`.env.example`](.env.example) ke `.env` dan set `SESSION_SECRET` untuk produksi.
 2. **Deploy:** Host Node (PM2, VPS, Railway, dll.): set env `SESSION_SECRET` dan `PORTAL_PASSWORD`, jalankan `node server/index.js` (atau `npm start`).
 
 ## Ganti workspace ke project ini
