@@ -56,7 +56,7 @@ function readDisplayName(landingDir) {
 }
 
 /**
- * @param {string} publicDir absolute path to public/
+ * @param {string} publicDir absolute path to site root (e.g. site/)
  * @returns {{ groups: Array<{ yyyymm: string, label: string, pages: Array<{ slug: string, path: string, displayName: string }> }> }}
  */
 function discoverLandings(publicDir) {
