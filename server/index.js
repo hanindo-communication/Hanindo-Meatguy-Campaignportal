@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -10,7 +11,23 @@ const {
 } = require('./auth');
 
 const PORT = parseInt(process.env.PORT || '3788', 10);
-const siteDir = path.join(__dirname, '..', 'site');
+
+/**
+ * Vercel bundles the function under `.vercel/output`; `__dirname` may not sit next to `site/`.
+ * `process.cwd()` is usually the repo root — and `includeFiles` in vercel.json copies `site/` there.
+ */
+function resolveSiteDir() {
+  const candidates = [
+    path.join(process.cwd(), 'site'),
+    path.join(__dirname, '..', 'site'),
+  ];
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, 'login.html'))) return dir;
+  }
+  return candidates[0];
+}
+
+const siteDir = resolveSiteDir();
 const loginPath = path.join(siteDir, 'login.html');
 const dashboardPath = path.join(siteDir, 'dashboard.html');
 
@@ -37,11 +54,13 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  if (isAuthenticated(req)) {
-    res.sendFile(dashboardPath);
-  } else {
-    res.sendFile(loginPath);
-  }
+  const file = isAuthenticated(req) ? dashboardPath : loginPath;
+  res.sendFile(file, (err) => {
+    if (err) {
+      console.error('[portal] sendFile failed', file, err.message);
+      res.status(500).type('text').send('Gagal memuat halaman; pastikan folder site/ ikut deploy (lihat vercel.json includeFiles).');
+    }
+  });
 });
 
 app.use((req, res, next) => requireAuth(req, res, next));

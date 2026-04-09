@@ -15,7 +15,7 @@ One-pager untuk mengarahkan traffic dari iklan video ke **WhatsApp** (reservasi 
 
 ## Deploy ke Vercel
 
-Proyek ini **bukan** static site murni: Vercel harus menjalankan **Express lewat serverless function**. Repo sudah menyertakan **`vercel.json`** (rewrite semua path ke **`/api`**) dan **`api/index.js`** (mengekspor app dari `server/index.js`).
+Proyek ini **bukan** static site murni: Vercel harus menjalankan **Express lewat serverless function**. Repo sudah menyertakan **`vercel.json`** (rewrite semua path ke **`/api`**, plus **`includeFiles`: `site/**`** agar HTML/assets landing ikut ke function) dan **`api/index.js`** (mengekspor app dari `server/index.js`). Path folder `site/` di server memakai **`process.cwd()`** dulu supaya cocok dengan layout deploy Vercel.
 
 **Di dashboard Vercel (Project → Settings):**
 
