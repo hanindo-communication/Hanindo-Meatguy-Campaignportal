@@ -4,14 +4,14 @@ One-pager untuk mengarahkan traffic dari iklan video ke **WhatsApp** (reservasi 
 
 ## Isi project
 
-- **`site/[yyyymm]/[slug]/`** — Satu folder per landing (mis. `site/202604/passion-meets-perfection/` berisi `index.html`, `content.json`, `assets/`, opsional `meta.json`). Folder `site` dilayani lewat Express setelah auth portal.
+- **`site/[yyyymm]/[slug]/`** — Satu folder per landing (mis. `site/202604/passion-meets-perfection/` berisi `index.html`, `content.json`, `assets/`, opsional `meta.json`). Folder `site` dilayani lewat Express setelah auth portal (lokal: `express.static`; di Vercel: handler di `server/site-static.js` + `includeFiles` di `vercel.json`).
 - **`server/`** — Server Node (Express): password portal, dashboard, API daftar landing.
 - **`PROJECT_SPEC.md`** — Brief dan syarat project.
 
 ## Cara pakai
 
 1. **Lokal:** `npm install` lalu **`npm start`** → **http://localhost:3788**. Form login ada di **`/`** (root); setelah masuk, **`/`** menampilkan direktori semua landing (grid + pratinjau). Kirim password lewat **`POST /session`**. Password default dev: `admin123` kecuali `PORTAL_PASSWORD` di `.env`. Landing utama: **http://localhost:3788/202604/passion-meets-perfection**. URL lama `/login` dan `/dashboard` dialihkan ke **`/`**. Salin [`.env.example`](.env.example) ke `.env` dan set `SESSION_SECRET` untuk produksi.
-2. **Deploy:** Host Node (PM2, VPS, Railway, dll.): set env `SESSION_SECRET` dan `PORTAL_PASSWORD`, jalankan `node server/index.js` (atau `npm start`).
+2. **Deploy:** Host Node (PM2, VPS, Railway, dll.): set env `SESSION_SECRET` dan `PORTAL_PASSWORD`, jalankan `node server/index.js` (atau `npm start`). **Vercel:** jangan tambahkan `index.js` di root (bisa terbaca sebagai file teks). Pakai [`api/index.js`](api/index.js) + [`vercel.json`](vercel.json); di dashboard set `SESSION_SECRET` dan `PORTAL_PASSWORD`, lalu deploy ulang.
 
 ## Ganti workspace ke project ini
 

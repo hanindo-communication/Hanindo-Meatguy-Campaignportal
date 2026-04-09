@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { discoverLandings } = require('./discover-landings');
+const { siteStatic } = require('./site-static');
 const {
   requireAuth,
   postLogin,
@@ -13,6 +14,7 @@ const PORT = parseInt(process.env.PORT || '3788', 10);
 const siteDir = path.join(__dirname, '..', 'site');
 const loginPath = path.join(siteDir, 'login.html');
 const dashboardPath = path.join(siteDir, 'dashboard.html');
+const ON_VERCEL = !!process.env.VERCEL;
 
 const app = express();
 app.set('trust proxy', 1);
@@ -55,7 +57,11 @@ app.get('/api/landing-pages', (req, res) => {
   }
 });
 
-app.use(express.static(siteDir));
+if (ON_VERCEL) {
+  app.use(siteStatic(siteDir));
+} else {
+  app.use(express.static(siteDir));
+}
 
 module.exports = app;
 
