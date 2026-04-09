@@ -3,47 +3,72 @@ const crypto = require('crypto');
 const COOKIE_NAME = 'portal_auth';
 const COOKIE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
-function getSecret() {
+const DEV_FALLBACK_SECRET = 'dev-only-insecure-secret-min-16-chars';
+
+/** Vercel sets VERCEL=1; treat like production for secrets and cookies. */
+function isProdLike() {
+  return (
+    process.env.NODE_ENV === 'production' || process.env.VERCEL === '1'
+  );
+}
+
+/** Secret for signing new sessions — required in production / on Vercel. */
+function resolveSigningSecret() {
   const s = process.env.SESSION_SECRET;
   if (s && s.length >= 16) return s;
-  if (process.env.NODE_ENV === 'production') {
+  if (isProdLike()) {
     throw new Error(
       'SESSION_SECRET must be set to a random string of at least 16 characters'
     );
   }
-  return 'dev-only-insecure-secret-min-16-chars';
+  return DEV_FALLBACK_SECRET;
+}
+
+/**
+ * Secret for verifying existing cookies. If missing in production, return null
+ * (treat as logged out) so routes like GET / do not throw Internal Server Error.
+ */
+function resolveVerifySecret() {
+  const s = process.env.SESSION_SECRET;
+  if (s && s.length >= 16) return s;
+  if (isProdLike()) return null;
+  return DEV_FALLBACK_SECRET;
 }
 
 function getPassword() {
   return process.env.PORTAL_PASSWORD || 'admin123';
 }
 
-function signPayload(payloadB64) {
+function signPayload(payloadB64, secret) {
   return crypto
-    .createHmac('sha256', getSecret())
+    .createHmac('sha256', secret)
     .update(payloadB64)
     .digest('base64url');
 }
 
 function createSessionToken() {
+  const secret = resolveSigningSecret();
   const payload = {
     exp: Date.now() + COOKIE_MAX_AGE_MS,
   };
   const payloadB64 = Buffer.from(JSON.stringify(payload), 'utf8').toString(
     'base64url'
   );
-  const sig = signPayload(payloadB64);
+  const sig = signPayload(payloadB64, secret);
   return `${payloadB64}.${sig}`;
 }
 
 function verifySessionToken(token) {
   if (!token || typeof token !== 'string') return false;
+  const secret = resolveVerifySecret();
+  if (!secret) return false;
+
   const dot = token.indexOf('.');
   if (dot === -1) return false;
   const payloadB64 = token.slice(0, dot);
   const sig = token.slice(dot + 1);
   if (!payloadB64 || !sig) return false;
-  const expected = signPayload(payloadB64);
+  const expected = signPayload(payloadB64, secret);
   const a = Buffer.from(sig);
   const b = Buffer.from(expected);
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return false;
@@ -92,8 +117,25 @@ function postLogin(req, res) {
     res.redirect(302, dest);
     return;
   }
-  const token = createSessionToken();
-  const secure = process.env.NODE_ENV === 'production';
+  let token;
+  try {
+    token = createSessionToken();
+  } catch (e) {
+    console.error('[auth] Cannot create session (check SESSION_SECRET on Vercel):', e.message);
+    res
+      .status(503)
+      .type('html')
+      .send(
+        '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Konfigurasi server</title></head><body style="font-family:sans-serif;padding:2rem;max-width:40rem">' +
+          '<h1>Konfigurasi belum lengkap</h1>' +
+          '<p>Di Vercel: <strong>Project → Settings → Environment Variables</strong>, tambahkan ' +
+          '<code>SESSION_SECRET</code> (string acak minimal <strong>16 karakter</strong>), lalu redeploy.</p>' +
+          '<p>Opsional: set juga <code>PORTAL_PASSWORD</code> untuk password portal.</p>' +
+          '</body></html>'
+      );
+    return;
+  }
+  const secure = isProdLike();
   res.cookie(COOKIE_NAME, token, {
     httpOnly: true,
     maxAge: COOKIE_MAX_AGE_MS,
@@ -101,12 +143,11 @@ function postLogin(req, res) {
     secure,
     path: '/',
   });
-  // Always land on the dashboard (landing list) after login — not on a deep `next` URL.
   res.redirect(302, '/');
 }
 
 function getLogout(req, res) {
-  const secure = process.env.NODE_ENV === 'production';
+  const secure = isProdLike();
   res.clearCookie(COOKIE_NAME, { path: '/', secure, sameSite: 'lax' });
   res.redirect('/');
 }

@@ -24,14 +24,14 @@ Proyek ini **bukan** static site murni: Vercel harus menjalankan **Express lewat
 - **Output Directory:** _kosongkan_  
 - **Install Command:** `npm install` (default)
 
-**Environment Variables (wajib di production):**
+**Environment Variables (wajib di Vercel):**
 
 | Name | Keterangan |
 |------|------------|
-| `SESSION_SECRET` | String acak **minimal 16 karakter**. Tanpa ini, di production server akan **crash** (lihat `server/auth.js`). |
+| `SESSION_SECRET` | String acak **minimal 16 karakter**. Wajib: di Vercel variabel `VERCEL=1` membuat app memperlakukan cookie seperti production; tanpa secret, **login (POST `/session`)** akan gagal sampai env ini disetel (sekarang ada halaman **503** penjelasan, bukan Internal Server Error polos). |
 | `PORTAL_PASSWORD` | Password portal (jangan pakai default `admin123` di production). |
 
-Tanpa `SESSION_SECRET` yang valid, error yang muncul biasanya berupa **500** / function crash saat cookie signing, bukan masalah routing.
+Setelah menambah env di **Settings → Environment Variables**, lakukan **Redeploy** agar nilai terbaca oleh function.
 
 **Batasan:** fungsi serverless punya limit ukuran & durasi; aset sangat besar (mis. video berat di `site/…/assets/`) bisa mendekati limit atau memperlambat cold start. Kalau perlu, taruh video di CDN/object storage dan rujuk dari HTML.
 
