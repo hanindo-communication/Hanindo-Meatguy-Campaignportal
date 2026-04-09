@@ -4,14 +4,14 @@ One-pager untuk mengarahkan traffic dari iklan video ke **WhatsApp** (reservasi 
 
 ## Isi project
 
-- **`index.html`** — Halaman utama (buka di browser atau deploy sebagai static).
-- **`content.json`** — Semua teks, link, dan copy one-pager dalam JSON; halaman memuat konten dari sini.
+- **`public/[yyyymm]/[slug]/`** — Satu folder per landing (mis. `public/202604/passion-meets-perfection/` berisi `index.html`, `content.json`, `assets/`, opsional `meta.json`).
+- **`server/`** — Server Node (Express): password portal, dashboard, API daftar landing.
 - **`PROJECT_SPEC.md`** — Brief dan syarat project.
 
 ## Cara pakai
 
-1. **Lokal:** Di folder ini jalankan `npm install` lalu **`npm start`** → buka **http://localhost:3788** (port khusus Meatguy, tidak bentrok dengan project lain). Atau `npx serve -s . -l 3788`. Tanpa server, buka `index.html` langsung (beberapa fitur fetch bisa terbatas).
-2. **Deploy:** Upload folder ini ke Vercel, Netlify, atau static host; set root ke folder ini dan file default ke `index.html`. Pastikan `content.json` ikut di-deploy.
+1. **Lokal:** `npm install` lalu **`npm start`** → **http://localhost:3788**. Form login ada di **`/`** (root); setelah masuk, **`/`** menampilkan direktori semua landing (grid + pratinjau). Kirim password lewat **`POST /session`**. Password default dev: `admin123` kecuali `PORTAL_PASSWORD` di `.env`. Landing utama: **http://localhost:3788/202604/passion-meets-perfection**. URL lama `/login` dan `/dashboard` dialihkan ke **`/`**. Salin [`.env.example`](.env.example) ke `.env` dan set `SESSION_SECRET` untuk produksi.
+2. **Deploy:** Butuh host yang menjalankan Node (bukan static host semata). Set env `SESSION_SECRET` dan `PORTAL_PASSWORD`, jalankan `node server/index.js` (atau PM2).
 
 ## Ganti workspace ke project ini
 

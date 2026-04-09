@@ -2,10 +2,11 @@
   "name": "meatguy-landing",
   "private": true,
   "scripts": {
-    "start": "serve -s . -l 3788",
-    "dev": "serve -s . -l 3790"
+    "start": "node server/index.js",
+    "dev": "PORT=3790 node server/index.js"
   },
-  "devDependencies": {
-    "serve": "^14.2.4"
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1"
   }
 }

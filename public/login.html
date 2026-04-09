@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal — Masuk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #0d0b0a;
+      --bg-card: #161412;
+      --accent: #c9a962;
+      --accent-dim: #a68b4a;
+      --text: #f5f0eb;
+      --text-muted: #9a9188;
+      --danger: #c97a62;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background-image:
+        radial-gradient(ellipse 85% 55% at 50% 18%, rgba(201, 169, 98, 0.06) 0%, transparent 48%),
+        radial-gradient(ellipse 65% 55% at 78% 72%, rgba(201, 169, 98, 0.04) 0%, transparent 55%);
+    }
+    .panel {
+      width: 100%;
+      max-width: 400px;
+      background: var(--bg-card);
+      border: 1px solid rgba(201, 169, 98, 0.15);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.75rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.35rem;
+    }
+    .sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 300;
+      margin-bottom: 1.75rem;
+    }
+    label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(201, 169, 98, 0.25);
+      background: rgba(13, 11, 10, 0.6);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    button {
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: 0.85rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
+      color: var(--bg-deep);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+    }
+    button:hover {
+      filter: brightness(1.05);
+    }
+    .err {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--danger);
+      display: none;
+    }
+    .err.show { display: block; }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>Campaign portal</h1>
+    <p class="sub">Masukkan password untuk mengakses landing pages.</p>
+    <form method="post" action="/session" id="form">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password" autofocus />
+      <input type="hidden" name="next" id="next" value="" />
+      <button type="submit">Masuk</button>
+    </form>
+    <p class="err" id="err">Password salah. Coba lagi.</p>
+  </div>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var next = params.get('next') || '';
+      if (next && next.indexOf('/') === 0 && next.indexOf('//') !== 0) {
+        document.getElementById('next').value = next;
+      }
+      if (params.get('error')) {
+        document.getElementById('err').classList.add('show');
+      }
+    })();
+  </script>
+</body>
+</html>
