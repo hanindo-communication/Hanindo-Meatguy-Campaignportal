@@ -2231,7 +2231,13 @@ Reserve your table or ask us anything.</span></p>
         if (typeof Lenis === 'undefined' || reduceMotion || !lenisDesktopMq.matches) {
           return;
         }
-        lenis = new Lenis({ duration: 1.2, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+        /* lerp + wheelMultiplier: stabil di bawah beban (duration/easing diabaikan saat lerp dipakai) */
+        lenis = new Lenis({
+          lerp: 0.1,
+          smoothWheel: true,
+          wheelMultiplier: 0.88,
+          touchMultiplier: 1,
+        });
         function raf(time) {
           if (!lenis) return;
           lenis.raf(time);
@@ -2407,14 +2413,28 @@ Reserve your table or ask us anything.</span></p>
 
       var spotlight = document.getElementById('hero-spotlight');
       if (spotlight && hero && window.matchMedia('(min-width: 769px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        hero.addEventListener('mousemove', function (e) {
+        var spotlightRaf = null;
+        var pendingSpotlight = { x: 0, y: 0 };
+        function flushSpotlight() {
+          spotlightRaf = null;
           var rect = hero.getBoundingClientRect();
-          var x = (e.clientX - rect.left) / rect.width - 0.5;
-          var y = (e.clientY - rect.top) / rect.height - 0.5;
+          var x = (pendingSpotlight.x - rect.left) / rect.width - 0.5;
+          var y = (pendingSpotlight.y - rect.top) / rect.height - 0.5;
           spotlight.style.setProperty('--mouse-x', x);
           spotlight.style.setProperty('--mouse-y', y);
+        }
+        hero.addEventListener('mousemove', function (e) {
+          pendingSpotlight.x = e.clientX;
+          pendingSpotlight.y = e.clientY;
+          if (spotlightRaf == null) {
+            spotlightRaf = requestAnimationFrame(flushSpotlight);
+          }
         });
         hero.addEventListener('mouseleave', function () {
+          if (spotlightRaf != null) {
+            cancelAnimationFrame(spotlightRaf);
+            spotlightRaf = null;
+          }
           spotlight.style.setProperty('--mouse-x', 0);
           spotlight.style.setProperty('--mouse-y', 0);
         });
@@ -2453,7 +2473,10 @@ Reserve your table or ask us anything.</span></p>
           }
         }
 
+        var magneticRafId = null;
         function magneticRaf() {
+          magneticRafId = null;
+          var needsNext = false;
           magneticButtons.forEach(function (btn) {
             btn.curX += (btn.targetX - btn.curX) * 0.12;
             btn.curY += (btn.targetY - btn.curY) * 0.12;
@@ -2461,22 +2484,35 @@ Reserve your table or ask us anything.</span></p>
             var y = Math.round(btn.curY * 10) / 10;
             btn.el.style.setProperty('--magnetic-x', x + 'px');
             btn.el.style.setProperty('--magnetic-y', y + 'px');
+            if (Math.abs(btn.targetX - btn.curX) > 0.04 || Math.abs(btn.targetY - btn.curY) > 0.04) {
+              needsNext = true;
+            }
           });
-          requestAnimationFrame(magneticRaf);
+          if (needsNext) {
+            magneticRafId = requestAnimationFrame(magneticRaf);
+          }
         }
-        if (magneticButtons.length) requestAnimationFrame(magneticRaf);
+        function kickMagneticRaf() {
+          if (!magneticButtons.length || magneticRafId != null) return;
+          magneticRafId = requestAnimationFrame(magneticRaf);
+        }
 
         if (hero && ctaHero) {
-          hero.addEventListener('mousemove', function (e) { setMagneticTarget(magneticButtons[0], e.clientX, e.clientY); });
+          hero.addEventListener('mousemove', function (e) {
+            setMagneticTarget(magneticButtons[0], e.clientX, e.clientY);
+            kickMagneticRaf();
+          });
           hero.addEventListener('mouseleave', function () {
             magneticButtons[0].targetX = 0;
             magneticButtons[0].targetY = 0;
+            kickMagneticRaf();
           });
         }
         if (floatingWa) {
           document.addEventListener('mousemove', function (e) {
             var idx = ctaHero ? 1 : 0;
             setMagneticTarget(magneticButtons[idx], e.clientX, e.clientY);
+            kickMagneticRaf();
           });
         }
       }
