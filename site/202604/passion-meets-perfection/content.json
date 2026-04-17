@@ -5,9 +5,8 @@
   },
   "hero": {
     "brandName": "Meatguy Steakhouse",
-    "label": "Premium Dry-Aged Steak",
     "headline": "Where Passion Meets Perfection",
-    "tagline": "Experience the craft.\nReserve your table or ask us anything.",
+    "tagline": "An Experience Awaits.\nReserve your table or allow us to assist you.",
     "ctaText": "Book Now",
     "waUrl": "https://wa.me/6281250070094",
     "scrollHint": "Scroll"
@@ -17,20 +16,19 @@
     "title": "Dimsthemeatguy",
     "subtitle": "The visionary behind Meatguy Steakhouse",
     "name": "Dimas Ramadhan Pangestu",
-    "role": "Founder of Meatguy Steakhouse",
     "imageUrl": "assets/founder.png",
     "paragraphs": [
-      "Dimas (Dimsthemeatguy) turned a love for meat into a movement — from content and community to judge at the World Steak Challenge and, now, Meatguy Steakhouse."
+      "Known as Dimsthemeatguy, started with a passion for meat and sharing it. Since 2020, he has built a loyal community through honest content about beef and grilling. His journey led him to judge the World Steak Challenge in 2024 and 2025. Today, it all comes to life in Meatguy Steakhouse, driven by passion, precision, and fire."
     ]
   },
   "chef": {
     "badge": "Meet Our Meat Master",
-    "title": "Expert craftsmanship in every cut",
+    "title": "Executive Chef & Meat Master Meatguy Steakhouse",
     "name": "Chef Teuku Wahyudi",
     "subtitle": "El Patrón",
     "imageUrl": "assets/chef.png",
     "paragraphs": [
-      "El Patrón brings a lifetime of passion to every cut: great steak from heart, not just heat — from grill to plate."
+      "For Chef Teuku Wahyudi, steak is more than food, it's passion. Known as El Patrón in the kitchen, he treats every cut with respect and every flame with purpose. At Meatguy Steakhouse, he believes great steak comes from the heart, not just heat."
     ]
   },
   "openingHours": {
@@ -51,11 +49,9 @@
     }
   },
   "about": {
-    "badge": "The Experience",
-    "title": "More than a meal",
+    "title": "About Meatguy Steakhouse",
     "paragraphs": [
-      "At Meatguy Steakhouse, every cut is chosen and prepared with passion, precision, and respect for flavour. We're honoured to be ranked No. 90 on the World's 101 Best Steak Restaurants (2025).",
-      "Bintaro & SCBD — one message away for reservations and inquiries."
+      "At Meatguy Steakhouse, everything begins with passion and craftsmanship. We serve the finest cuts, prepared with precision and respect for flavor. Beyond dining, we offer an experience that lingers beyond the last bite. In 2025, we are honored to be ranked No. 90 on the World's 101 Best Steak Restaurants, reflecting our pursuit of excellence."
     ]
   },
   "awards": {

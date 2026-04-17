@@ -36,6 +36,7 @@
       --accent-dim: #a68b4a;
       --text: #f5f0eb;
       --text-muted: #9a9188;
+      --site-header-offset: calc(5.25rem + env(safe-area-inset-top, 0px));
     }
 
     * {
@@ -48,6 +49,11 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
       max-width: 100%;
+    }
+    @media (max-width: 768px) {
+      html {
+        scroll-behavior: auto;
+      }
     }
 
     body {
@@ -100,7 +106,17 @@
       z-index: 1;
     }
 
-    /* Site header — shows after scroll (mobile-first) */
+    #about,
+    #founder,
+    #chef,
+    #highlighted-menu,
+    #awards,
+    #lokasi,
+    #opening-hours {
+      scroll-margin-top: var(--site-header-offset);
+    }
+
+    /* Site header — fixed, always visible */
     .site-header {
       position: fixed;
       top: 0;
@@ -108,13 +124,10 @@
       right: 0;
       z-index: 100;
       padding: 0.75rem 1.25rem;
+      padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
       background: rgba(13, 11, 10, 0.92);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      transform: translateY(-100%);
-      transition: transform 0.3s ease;
-    }
-    .site-header.visible {
       transform: translateY(0);
     }
     .site-header .brand-name {
@@ -457,7 +470,7 @@
       padding: 0 0.5rem;
       opacity: 0;
       animation: fadeUp 0.72s ease 0.74s forwards;
-      scroll-margin-top: 5rem;
+      scroll-margin-top: var(--site-header-offset);
     }
     .hero-opening-hours__label {
       font-size: clamp(0.7rem, 1.2vw, 0.82rem);
@@ -1867,14 +1880,14 @@
 <body>
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <a href="https://meatguysteakhouse.com/reservation" class="floating-wa" id="floating-wa" target="_blank" rel="noopener" aria-label="Reservation — Meatguy Steakhouse" data-json-href="ctaBlock.waUrl">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 2a1 1 0 0 0-1 1v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3h-2V3a1 1 0 1 0-2 0v1H9V3a1 1 0 0 0-1-1Zm0 7a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2H9Z"/></svg>
     <span data-json="ctaBlock.floatingLabel">Reservation</span>
   </a>
   <header class="site-header" id="site-header" aria-label="Navigation">
     <span class="brand-name" data-json="hero.brandName">Meatguy Steakhouse</span>
     <nav class="header-nav" aria-label="Main">
       <a href="#about">About</a>
-      <a href="#founder">Story</a>
+      <a href="#highlighted-menu">Menu</a>
       <a href="#chef">Chef</a>
       <a href="#awards">Awards</a>
       <a href="#opening-hours">Hours</a>
@@ -1895,7 +1908,6 @@
       <div class="hero-content">
         <img class="hero-logo" src="assets/logo.png" alt="Meatguy Steakhouse" />
         <h2 class="brand-name" data-json="hero.brandName">Meatguy Steakhouse</h2>
-        <p class="label" data-json="hero.label">Premium Dry-Aged Steak</p>
         <h1 data-json="hero.headline">Where Passion Meets Perfection</h1>
         <p class="tagline"><span data-json="hero.tagline">Experience the craft.
 Reserve your table or ask us anything.</span></p>
@@ -1926,10 +1938,8 @@ Reserve your table or ask us anything.</span></p>
     </section>
 
     <section class="section reveal" id="about">
-      <p class="badge reveal-item" data-json="about.badge">The Experience</p>
       <h2 class="reveal-item" data-json="about.title">More than a meal</h2>
       <p class="reveal-item" data-json="about.paragraphs[0]">At Meatguy Steakhouse, every cut is chosen and prepared with passion, precision, and respect for flavour. We’re honoured to be ranked No. 90 on the World’s 101 Best Steak Restaurants (2025).</p>
-      <p class="reveal-item" data-json="about.paragraphs[1]">Bintaro & SCBD — one message away for reservations and inquiries.</p>
       <!-- Tiga highlight video: MP4 di assets/ — pratinjau frame awal, play hanya setelah klik (tanpa autoplay) -->
       <div class="about-video-grid reveal-item" aria-label="Highlight video Meatguy Steakhouse">
         <figure class="about-video-card about-video-card--native">
@@ -2120,7 +2130,6 @@ Reserve your table or ask us anything.</span></p>
             <p class="section-subtitle" data-json="founder.subtitle">The visionary behind Meatguy Steakhouse</p>
             <div class="profile-identity">
               <p class="section-name" data-json="founder.name">Dimas Ramadhan Pangestu</p>
-              <p class="profile-role" data-json="founder.role">Founder of Meatguy Steakhouse</p>
             </div>
             <p class="profile-bio" data-json="founder.paragraphs[0]">Dimas (Dimsthemeatguy) turned a love for meat into a movement — from content and community to judge at the World Steak Challenge and, now, Meatguy Steakhouse.</p>
           </div>
@@ -2205,14 +2214,33 @@ Reserve your table or ask us anything.</span></p>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script>
     (function () {
-      if (typeof Lenis !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        var lenis = new Lenis({ duration: 1.2, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
-        function raf(time) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
+      var lenis = null;
+      var lenisRafId = null;
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var lenisDesktopMq = window.matchMedia('(min-width: 769px)');
+
+      function syncLenis() {
+        if (lenisRafId != null) {
+          cancelAnimationFrame(lenisRafId);
+          lenisRafId = null;
         }
-        requestAnimationFrame(raf);
+        if (lenis) {
+          if (typeof lenis.destroy === 'function') lenis.destroy();
+          lenis = null;
+        }
+        if (typeof Lenis === 'undefined' || reduceMotion || !lenisDesktopMq.matches) {
+          return;
+        }
+        lenis = new Lenis({ duration: 1.2, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+        function raf(time) {
+          if (!lenis) return;
+          lenis.raf(time);
+          lenisRafId = requestAnimationFrame(raf);
+        }
+        lenisRafId = requestAnimationFrame(raf);
       }
+      syncLenis();
+      lenisDesktopMq.addEventListener('change', syncLenis);
 
       var sections = document.querySelectorAll('.section.reveal, .awards.reveal, .cta-block.reveal, footer.site-footer.reveal');
       var observer = new IntersectionObserver(function (entries) {
@@ -2236,16 +2264,30 @@ Reserve your table or ask us anything.</span></p>
       }, { rootMargin: '-10% 0px -15% 0px', threshold: 0 });
       inViewSections.forEach(function (el) { inViewObserver.observe(el); });
 
-      var header = document.getElementById('site-header');
       var scrollHint = document.querySelector('.scroll-hint');
       var floatingWa = document.getElementById('floating-wa');
-      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var headerNav = document.querySelector('.header-nav');
+      if (headerNav) {
+        headerNav.addEventListener('click', function (e) {
+          var a = e.target.closest('a[href^="#"]');
+          if (!a) return;
+          var href = a.getAttribute('href');
+          if (!href || href === '#') return;
+          var target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          var headerEl = document.getElementById('site-header');
+          var pad = 8;
+          var offset = (headerEl ? headerEl.getBoundingClientRect().height : 0) + pad;
+          if (lenis) {
+            lenis.scrollTo(target, { offset: -offset });
+          } else {
+            var top = target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+          }
+        });
+      }
       function onScroll() {
-        if (window.scrollY > 80) {
-          header.classList.add('visible');
-        } else {
-          header.classList.remove('visible');
-        }
         if (scrollHint) {
           if (window.scrollY > 50) {
             scrollHint.classList.add('faded');
