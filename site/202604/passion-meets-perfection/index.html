@@ -24,11 +24,31 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Meatguy Steakhouse | Premium Dry-Aged Steak Experience" />
   <meta name="twitter:description" content="Where Passion Meets Perfection. Reservasi dan inquiry via WhatsApp — Meatguy Bintaro & SCBD." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.13/dist/lenis.css" />
   <style>
+    /* Nautica (Resistenza): letakkan file webfont berlisensi di assets/fonts/ */
+    @font-face {
+      font-family: 'Nautica';
+      src: url('assets/fonts/Nautica-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Nautica';
+      src: url('assets/fonts/Nautica-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Nautica';
+      src: url('assets/fonts/Nautica-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg-deep: #0d0b0a;
       --bg-card: #161412;
@@ -49,6 +69,8 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
       max-width: 100%;
+      background-color: var(--bg-deep);
+      color-scheme: dark;
     }
     @media (max-width: 768px) {
       html {
@@ -57,7 +79,8 @@
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
+      font-weight: 400;
       background: var(--bg-deep);
       color: var(--text);
       min-height: 100vh;
@@ -153,9 +176,9 @@
       transform: translateY(0);
     }
     .site-header .brand-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 1.25rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text);
       letter-spacing: 0.02em;
     }
@@ -216,15 +239,36 @@
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
     }
-    /* Hero background layer — statis, hanya di dalam hero (tidak nabrak section bawah) */
+    /* Hero background — slideshow (crossfade), gambar di assets/hero-slide-*.png */
     .hero-bg-layer {
       position: absolute;
       inset: 0;
       z-index: 0;
-      background-image: url('assets/hero-bg.png');
+    }
+    .hero-bg-slide {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-color: var(--bg-deep);
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+      pointer-events: none;
+    }
+    .hero-bg-slide.is-active {
+      z-index: 1;
+      opacity: 1;
+    }
+    .hero-bg-slide:nth-child(1) {
+      background-image: url('assets/hero-slide-1.png');
+    }
+    .hero-bg-slide:nth-child(2) {
+      background-image: url('assets/hero-slide-2.png');
+    }
+    .hero-bg-slide:nth-child(3) {
+      background-image: url('assets/hero-slide-3.png');
     }
     .hero-bg-layer::after {
       content: '';
@@ -329,6 +373,17 @@
       .hero-light-sweep,
       .hero-bokeh .bokeh-dot { animation: none; }
       .hero-light-sweep { opacity: 0; }
+      /* Tanpa ini, preview/OS dengan “reduce motion” bisa membiarkan hero di opacity:0 → layar kosong. */
+      .hero .brand-name,
+      .hero .hero-logo,
+      .hero .label,
+      .hero h1,
+      .hero .tagline,
+      .cta-hero,
+      .hero-opening-hours {
+        opacity: 1 !important;
+        animation: none !important;
+      }
     }
 
     /* Overlay: vignette (gelap di pinggir, terang di tengah) — background tetap kelihatan, teks terbaca + noise */
@@ -378,9 +433,9 @@
     }
 
     .hero .brand-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(1.35rem, 4vw, 1.75rem);
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       letter-spacing: 0.08em;
       margin-bottom: 0.75rem;
@@ -416,9 +471,9 @@
     }
 
     .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(2.25rem, 6vw, 4rem);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.15;
       margin-bottom: 1rem;
       opacity: 0;
@@ -501,7 +556,7 @@
       color: rgba(201, 169, 98, 0.92);
       margin: 0 0 0.65rem;
       text-shadow: 0 0 20px rgba(201, 169, 98, 0.22);
-      font-weight: 600;
+      font-weight: 500;
     }
     .hero-opening-hours .opening-hours-grid {
       margin-top: 0;
@@ -727,9 +782,9 @@
       margin: 0;
       border: none;
       cursor: pointer;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 0.72rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--accent);
@@ -937,22 +992,24 @@
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--accent);
+      font-weight: 700;
       margin-bottom: 1rem;
     }
 
     .section h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(1.75rem, 4vw, 2.25rem);
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 1rem;
       line-height: 1.25;
     }
 
     .section p {
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       color: var(--text-muted);
       font-size: 1rem;
-      line-height: 1.7;
-      font-weight: 300;
+      line-height: 1.75;
+      font-weight: 400;
     }
 
     .section p + p {
@@ -960,17 +1017,18 @@
     }
 
     .section .section-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 1.35rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       margin-bottom: 0.35rem;
       letter-spacing: 0.04em;
     }
     .section .section-subtitle {
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 0.9rem;
       color: var(--text-muted);
-      font-weight: 400;
+      font-weight: 500;
       margin-bottom: 1.25rem;
     }
 
@@ -985,7 +1043,7 @@
       justify-content: center;
       text-decoration: none;
       font-size: clamp(0.62rem, 1.05vw, 0.72rem);
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
@@ -1046,9 +1104,9 @@
       }
     }
     .highlighted-menu-row-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(0.7rem, 1.35vw, 0.78rem);
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent);
@@ -1142,9 +1200,9 @@
       box-shadow: inset 0 0 0 1px rgba(201, 169, 98, 0.08);
     }
     .highlighted-menu-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(0.68rem, 1.45vw, 0.82rem);
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       letter-spacing: 0.04em;
       margin-bottom: 0.2rem;
@@ -1152,10 +1210,11 @@
       line-height: 1.25;
     }
     .highlighted-menu-desc {
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       color: var(--text-muted);
       font-size: clamp(0.65rem, 1.2vw, 0.74rem);
       line-height: 1.45;
-      font-weight: 300;
+      font-weight: 400;
     }
     /* Kolase menu: kotak foto 4:3 sama rata per sel grid (cover) supaya portrait/landscape sama “isi”-nya */
     .highlighted-menu-card--collage .highlighted-menu-image {
@@ -1265,28 +1324,29 @@
       font-size: 0.65rem;
       letter-spacing: 0.22em;
       line-height: 1.35;
+      font-weight: 700;
     }
     .founder-chef-pair .founder-text h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(1.35rem, 2.8vw, 1.65rem);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.2;
       letter-spacing: 0.01em;
       margin-bottom: 0;
-      color: var(--text);
+      color: var(--accent);
     }
     /* Chef: El Patrón (subtitle di DOM) = gaya headline founder; “Expert craftsmanship…” (h2) = gaya subtitle founder */
     .founder-chef-pair #chef .chef-text .section-subtitle {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(1.35rem, 2.8vw, 1.65rem);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.2;
       letter-spacing: 0.01em;
       margin-bottom: 0;
-      color: var(--text);
+      color: var(--accent);
     }
     .founder-chef-pair #chef .chef-text h2 {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 0.8125rem;
       line-height: 1.55;
       font-weight: 400;
@@ -1301,7 +1361,7 @@
       max-width: 100%;
       margin-bottom: 0;
       color: var(--text-muted);
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-weight: 400;
     }
     .founder-chef-pair .profile-identity {
@@ -1314,25 +1374,27 @@
       width: 100%;
     }
     .founder-chef-pair .profile-identity .section-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 1.125rem;
       line-height: 1.25;
       letter-spacing: 0.02em;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       margin-bottom: 0;
     }
     .founder-chef-pair .profile-role {
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 0.8125rem;
       line-height: 1.45;
-      color: var(--text-muted);
-      font-weight: 400;
+      color: var(--text);
+      font-weight: 500;
     }
     .founder-chef-pair .profile-bio {
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 0.875rem;
-      line-height: 1.65;
-      color: var(--text-muted);
-      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text);
+      font-weight: 400;
       margin-top: 0.35rem;
     }
     @media (max-width: 768px) {
@@ -1367,12 +1429,13 @@
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--accent);
+      font-weight: 700;
       margin-bottom: 1rem;
     }
     .awards .awards-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(1.75rem, 4vw, 2.25rem);
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 2rem;
       line-height: 1.25;
     }
@@ -1433,9 +1496,9 @@
       transform: perspective(800px) rotateX(0deg) rotateY(0deg);
     }
     .opening-hours-card h3 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 1.2rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       margin-bottom: 0.75rem;
       letter-spacing: 0.04em;
@@ -1554,19 +1617,20 @@
     }
 
     .lokasi-outlet-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: 1.35rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       margin-bottom: 0.65rem;
       letter-spacing: 0.04em;
     }
 
     .lokasi-address {
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.65;
-      font-weight: 300;
+      font-weight: 400;
       margin: 0;
     }
     .lokasi-map-cell {
@@ -1630,7 +1694,7 @@
       border-radius: 6px;
       color: var(--accent);
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       opacity: 0.9;
@@ -1658,9 +1722,9 @@
     }
 
     .cta-block h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Nautica', Georgia, 'Times New Roman', serif;
       font-size: clamp(1.5rem, 3.5vw, 2rem);
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 2rem;
     }
 
@@ -1934,7 +1998,11 @@
   </header>
   <main>
     <section class="hero" id="hero">
-      <div class="hero-bg-layer" id="hero-bg-layer" aria-hidden="true"></div>
+      <div class="hero-bg-layer" id="hero-bg-layer" aria-hidden="true">
+        <div class="hero-bg-slide is-active" role="presentation"></div>
+        <div class="hero-bg-slide" role="presentation"></div>
+        <div class="hero-bg-slide" role="presentation"></div>
+      </div>
       <div class="hero-bg-immersive" aria-hidden="true">
         <div class="hero-spotlight" id="hero-spotlight" aria-hidden="true"></div>
         <div class="hero-light-sweep" aria-hidden="true"></div>
@@ -2409,8 +2477,26 @@ Reserve your table or ask us anything.</span></p>
 
       var hero = document.getElementById('hero');
       var heroBgTest = new Image();
-      heroBgTest.onload = function () { hero.classList.add('has-bg-local'); };
-      heroBgTest.src = 'assets/hero-bg.png';
+      heroBgTest.onload = function () {
+        if (hero) hero.classList.add('has-bg-local');
+      };
+      heroBgTest.src = 'assets/hero-slide-1.png';
+
+      var heroBgLayer = document.getElementById('hero-bg-layer');
+      if (heroBgLayer) {
+        var heroSlides = heroBgLayer.querySelectorAll('.hero-bg-slide');
+        if (
+          heroSlides.length > 1 &&
+          !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+          var heroSlideIdx = 0;
+          setInterval(function () {
+            heroSlides[heroSlideIdx].classList.remove('is-active');
+            heroSlideIdx = (heroSlideIdx + 1) % heroSlides.length;
+            heroSlides[heroSlideIdx].classList.add('is-active');
+          }, 10000);
+        }
+      }
 
       if (hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         var heroObserver = new IntersectionObserver(function (entries) {
@@ -2424,7 +2510,6 @@ Reserve your table or ask us anything.</span></p>
         }, { threshold: 0, rootMargin: '-5% 0px -5% 0px' });
         heroObserver.observe(hero);
 
-        var heroBgLayer = document.getElementById('hero-bg-layer');
         if (heroBgLayer && window.matchMedia('(min-width: 769px)').matches) {
           var parallaxTicking = false;
           function updateHeroParallax() {
